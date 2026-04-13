@@ -1,0 +1,1177 @@
+{
+    "id": "gasp-ss-v1",
+    "title": "Side Scroller Game Template V1.0",
+    "sections": [
+        {
+            "title": "Introduction",
+            "content": [
+                {
+                    "type": "image",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/380/large/wraithcg-screenshot-2026-04-12-102350.jpg?1776058783",
+                    "align": "full",
+                    "caption": "Side Scroller Game Template with Motion Matching (v1.0)"
+                },
+                {
+                    "type": "header",
+                    "value": "Getting Started"
+                },
+                {
+                    "type": "text",
+                    "value": "This document serves as a comprehensive guide to the <b>Side Scroller Game Template V1.0 with Motion Matching</b>. The template provides a robust framework for creating sidescroller games in Unreal Engine, featuring dynamic parkour, character selection, customization, and an interaction system."
+                },
+                {
+                    "type": "text",
+                    "value": [
+                        "<b>Showcase Videos</b>:",
+                        "<ul>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/rBk-THbrwZw?si=R4loV-GOLNUfO3IA\">Version 1.3</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/6Qa-VcjqNEQ?si=2MGE5pFnEhQg6_1V\">Version 1.2</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/bw_BQr_kRls?si=3gg5rXyBBd7KaOnU\">Version 1.1</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/K-krpW_bsBU?si=Nhzo6mmJOQ3qbzhd\">Version 1.0</a></li>",
+                        "</ul>"
+                    ]
+                },
+                {
+                    "type": "tip",
+                    "value": "<b>Support:</b> For questions or assistance, please leave a comment on the product page or join the Discord server. Please consider rating and reviewing the asset if it proves useful."
+                }
+            ]
+        },
+        {
+            "title": "Development Roadmap",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "Track the progress as the project upgrades. <ul><li>Green items are live,</li><li>Blue are currently being worked on</li><li>and Yellow are planned for future releases.</li></ul>"
+                },
+                {
+                    "type": "roadmap",
+                    "milestones": [
+                        {
+                            "version": "Version 1.0",
+                            "date": "October 2025",
+                            "status": "in-progress",
+                            "features": [
+                                "Simple Main Menu",
+                                "Character Death Screen",
+                                "Character Selection System",
+                                "Metahumans Support",
+                                "Movement Aware Camera Shifting",
+                                "Environment Creation Tools",
+                                "Dynamic Parkour Support",
+                                "Character Customization System",
+                                "Emote System",
+                                "Simple Interaction System",
+                                "Widgets Management System"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Important Notes",
+            "content": [
+                {
+                    "type": "header",
+                    "value": "Prerequisites"
+                },
+                {
+                    "type": "text",
+                    "value": "<b>Motion Matching:</b> This project uses the customized setup from the <i>GameAnimationSampleProject (GASP)</i> for Motion Matching. No new motion matching setup was specifically created for this project."
+                },
+                {
+                    "type": "note",
+                    "value": "The default setup has been modified to improve gameplay fluidity. But you will need to add  specific animations to improve the results. The existing GASP animations have been repurposed for various actions."
+                },
+                {
+                    "type": "header",
+                    "value": "Project Settings"
+                },
+                {
+                    "type": "text",
+                    "value": "<b>Required Plugins:</b><br><ul><li><b>Animation:</b> AnimationWarping, MotionWarping, AnimationLocomotionLibrary, PoseSearch, Chooser, RigLogic, LiveLink, LiveLinkControlRig.</li><li><b>Tools:</b> ModelingToolsEditorMode, HairStrands, Mover, NetworkPrediction.</li></ul>"
+                },
+                {
+                    "type": "header",
+                    "value": "Save Game Data"
+                },
+                {
+                    "type": "text",
+                    "value": "<ul><li><b>No Save Data:</b> The project does not use a GameInstanceClass. Data is not saved between levels or game replays.</li><li><b>Customization Reset:</b> Any customization items attached to a character are lost if the character is changed.</li></ul>"
+                },
+                {
+                    "type": "header",
+                    "value": "Integration Strategy"
+                },
+                {
+                    "type": "text",
+                    "value": "The project is intended to be used as a base starting project."
+                },
+                {
+                    "type": "note",
+                    "value": "<b>Migration Guide:</b> Though modular, this project is not intended for migration into existing projects. However, you can easily download and integrate some systems selectively from FAB."
+                }
+            ]
+        },
+        {
+            "title": "Controls",
+            "content": [
+                {
+                    "type": "image",
+                    "src": "MISSING",
+                    "align": "right",
+                    "caption": "Input Actions"
+                },
+                {
+                    "type": "header",
+                    "value": "Gameplay Controls"
+                },
+                {
+                    "type": "text",
+                    "value": [
+                        "<ul>",
+                        "<li><b>A:</b> Move Left</li>",
+                        "<li><b>D:</b> Move Right</li>",
+                        "<li><b>C:</b> Crouch</li>",
+                        "<li><b>Space:</b> Jump / Parkour</li>",
+                        "<li><b>E:</b> Interact</li>",
+                        "</ul>"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Core Systems",
+            "content": [
+                {
+                    "type": "image",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/394/large/wraithcg-screenshot-2026-04-12-103338.jpg?1776058849",
+                    "align": "right",
+                    "caption": "Core Game Systems"
+                },
+                {
+                    "type": "header",
+                    "value": "Game Data"
+                }
+            ],
+            "subsections": [
+                {
+                    "title": "Side Scroller Character",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "Character Blueprints"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/070/386/large/wraithcg-screenshot-2026-04-12-103125.jpg?1776058806",
+                            "align": "full",
+                            "caption": "Character Blueprints"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>The main character class is - <i>CBP_SideScrollerCharacterBase</i>.</li>",
+                                "<li>The main anim blueprint class is - <i>ABP_SideScrollerCharacterBase</i>.</li>",
+                                "<li>They are present in <i>Base</i> folder.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                          "type":"header",
+                          "value":"Playable Characters"  
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/391/large/wraithcg-screenshot-2026-04-12-103244.jpg?1776058836",
+                            "align": "left",
+                            "caption": "Base Player Character Classes"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/389/large/wraithcg-screenshot-2026-04-12-103156.jpg?1776058820",
+                            "align": "right",
+                            "caption": "Playable Characters"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/070/390/large/wraithcg-screenshot-2026-04-12-103206.jpg?1776058828",
+                            "align": "right",
+                            "caption": "RetargetedCharacters"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>The main player character class is - <i>CBP_SideScrollerPlayerBase</i>.</li>",
+                                "<li>The main NPC class is - <i>CBP_SideScrollerNPCBase</i>.</li>",
+                                "<li>The respective usable player and npcs are present in respective folders.</li>",
+                                "<li>The characters which use different skeleton than UEFN character skeleton use runtime retargeting.</li>",
+                                "<li>The <i>GenericRetargeter</i> anim blueprint is used for driving animations off of main character class.</li>",
+                                "</ul>"
+                            ]
+                        }
+                        
+                    ],
+                    "subsections": [
+                        {
+                            "title": "Side Scroller Character",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "CBP_SideScrollerPlayerBase"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/391/large/wraithcg-screenshot-2026-04-12-103244.jpg?1776058836",
+                                    "align": "full",
+                                    "caption": "CBP_SideScrollerPlayerBase"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": "The logic for various actions is separated into different graphs."
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/419/large/wraithcg-screenshot-2026-04-12-104837.jpg?1776058937",
+                                    "align": "left",
+                                    "caption": "EventGraph"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/420/large/wraithcg-screenshot-2026-04-12-105027.jpg?1776058949",
+                                    "align": "right",
+                                    "caption": "MovementGraph"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/426/large/wraithcg-screenshot-2026-04-12-105144.jpg?1776058959",
+                                    "align": "right",
+                                    "caption": "InterfaceGraph"
+                                },
+                                {
+                                    "type": "header",
+                                    "value": "Setting Up a New Character"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "See <b>Character Selection System</b> for detailed instructions."
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Animation Blueprint",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "ABP_GenericRetarget"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/793/662/large/wraithcg-screenshot-2026-01-26-194216.jpg?1769535368",
+                                    "align": "full",
+                                    "caption": "Animation Blueprint Graph"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "It is used for driving motion matched animations off of UEFN skeleton by retargeting at runtime based on respective IKRetargeter."
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Game Mode",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "GM_SideScrollerBase"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/397/large/wraithcg-screenshot-2026-04-12-103456.jpg?1776058864",
+                            "align": "full",
+                            "caption": "GM_SideScrollerBase"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Responsible for maintaining and communicating between different base elements in the project.",
+                                "<li><i>AddWidgetToScreen</i> interface call is executed by the game mode which in turn asks the <i>HUD_RunnerManager</i> to add the requested widget.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "tip",
+                            "value": [
+                                "<ul>",
+                                "<li>Make sure the <i>DefaultPawnClass</i> is set to the first character in your character selection list <i>_DA_PDA_CharacterSelectionData</i>.</li>",
+                                "<li>Make sure the <i>PlayerControllerClass</i> is set to <b>PC_SideScroller</b> otherwise the character selection system may malfunction.</li>",
+                                "<li>Make sure the <i>DefaultHUDClass</i> is set to <b>HUD_SideScroller</b> otherwise the widgets management system may malfunction.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Player Controller",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "PC_SideScroller"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/407/large/wraithcg-screenshot-2026-04-12-103814.jpg?1776058897",
+                            "align": "full",
+                            "caption": "PC_SideScroller"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Responsible for managing player character data and actual logic of fetching character in either direction is managed in the parent class.</li>",
+                                "<li>Deactivation of fetching characters in either directions on the character selection screen is also managed here.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Properties"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>CharacterData:</b> The data asset that contains the list of available characters.</li>",
+                                "<li><b>CurrentCharacterData:</b> The character data asset pertaining to the first character in the CharacterData DA.</li>",
+                                "<li><b>CircularList:</b> Determines whether or not the character selection list is <i>Bidirectionally Circular</i> or <i>Linear</i>.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "tip",
+                            "value": [
+                                "Make sure the first character in your character selection list is the same character assigned as default pawn in the game mode."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "HUD Manager",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "HUD_SideScroller"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/403/large/wraithcg-screenshot-2026-04-12-103613.jpg?1776058887",
+                            "align": "full",
+                            "caption": "HUD_SideScroller"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Responsible for management of on-screen widgets.</li>",
+                                "<li>Based on widgets configuration, correspondiing level sequences are played in the background of the widget screens.</li>",
+                                "<li>It is called by the game mode internally when any widget is requested.</li>",
+                                "<li>It is based on <i>Widgets Management System V1.1</i>.</li>",
+                                "<li>The visibility of mouse cursor is also managed here depending on whether or not the current widget state is \"Gameplay HUD\".</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Properties"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>WidgetsDB:</b> The data asset that contains configurations regarding various widgets to be added to viewport on demand.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "note",
+                            "value": [
+                                "Do not modify <b>CachedWidget</b> directly/indirectly inside or from outside. It is categorized under <i>Privates</i> but not marked private to allow instant access to game mode when required."
+                            ]
+                        }
+                    ],
+                    "subsections": [
+                        {
+                            "title": "Setup",
+                            "content": [
+                                {
+                                    "type": "image",
+                                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/449/large/wraithcg-screenshot-2026-04-12-110810.jpg?1776059007",
+                                    "align": "left",
+                                    "caption": "E_WidgetScreen"
+                                },
+                                {
+                                    "type": "header",
+                                    "value": "Adding New Widget Screen"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li>Create a new widget blueprint of your choice.</li>",
+                                        "<li>Go to <i>Components > Widgets > Enumeration</i> and open <b>E_WidgetScreen</b>.</li>",
+                                        "<li>Add a new enumeration value and rename it to your desired category.</li>",
+                                        "<li>Click Save.</li>",
+                                        "<li>Now go to <i>Components > Widgets > DataAsset</i> and open <b>DA_PDA_WidgetData</b>.</li>",
+                                        "<li>Add a new element by clicking the plus icon.</li>",
+                                        "</ul>",
+                                        "<br>"
+                                    ]
+                                },
+                                {
+                                    "type": "tip",
+                                    "value": "You can also create a new camera rig and assign it in the <i>CameraDirector_SandboxCharacter's</i> \"WidgetController\" code block on switch enum to further elevate your game :)"
+                                },
+                                {
+                                    "type": "header",
+                                    "value": "Properties"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/793/680/large/wraithcg-screenshot-2026-01-26-124213.jpg?1769535403",
+                                    "align": "right",
+                                    "caption": "DA_PDA_WidgetData"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li><b>WidgetScreen:</b> Select your widget category.</li>",
+                                        "<li><b>WidgetElement:</b> Assign the widget blueprint relative to this category.</li>",
+                                        "<li><b>PlayLevelSequence:</b> This toggle determines whether or not level sequences will be played in the background of this widget.</li>",
+                                        "<li><b>LevelSequences:</b> Add the level sequences that can be played in this array. Only required if <i>PlayLevelSequence</i> boolean is <i>True</i>.",
+                                        "<ul>",
+                                        "<li><b>PlayableSequence:</b> Assign a valid level sequence.</li>",
+                                        "<li><b>PlayRate:</b> Adjust the play rate of this level sequence.</li>",
+                                        "<li><b>Transform:</b> By default, all level sequences are played relative to the player. Use these transform values to adjust the sequence relative to player.</li>",
+                                        "</ul></li>",
+                                        "</ul>"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Widget Elements",
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "value": "These widget elements have been used to create the existing widget blueprints. The widgets management is not tied to them and you can use your own custom widgets too."
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/445/large/wraithcg-screenshot-2026-04-12-110805.jpg?1776059002",
+                                    "align": "left",
+                                    "caption": "Widget Elements"
+                                }
+                            ],
+                            "subsections": [
+                                {
+                                    "title": "E_Button",
+                                    "content": [
+                                        {
+                                            "type": "header",
+                                            "value": "Properties"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": [
+                                                "<ul>",
+                                                "<li><b>Name:</b> Assign the name of the button.</li>",
+                                                "<li><b>Typeface:</b> The text can be either Regular or Bold.</li>",
+                                                "<li><b>FontFamily:</b> Change the font family of this button text.</li>",
+                                                "<li><b>FontSize:</b> Set the font size.",
+                                                "<li><b>SkewText:</b> Skew the text using float value.</li>",
+                                                "<li><b>Spacing:</b> Adjust the letter spacing.</li>",
+                                                "<li><b>Scale:</b> Change the render scale of the text in X and Y directions.</li>",
+                                                "<li><b>ColorData:</b> Assign the colors of this button during various events - normal, hovered, clicked, passive, etc;</li>",
+                                                "<li><b>MonoSpacing:</b> Toggle for whether or not to use monospacing for this button text.</li>",
+                                                "<li><b>MonoSpacingWidth:</b> Adjust the monospacing width.</li>",
+                                                "<li><b>ShadowColor:</b> Customize the shadow color for this button text.</li>",
+                                                "<li><b>ShadowOffset:</b> Adjust the shadow offset.</li>",
+                                                "<li><b>Status:</b> Whether or not the button the active on start. Depending on the status, the assigned colors will appear.</li>",
+                                                "<li><b>WarpText:</b> Whether or not to adjust the text within the bounds of the button.</li>",
+                                                "<li><b>BackgroundBlur:</b> Adjust the strength of the background blur behind the text.</li>",
+                                                "</ul>"
+                                            ]
+                                        },
+                                        {
+                                            "type": "header",
+                                            "value": "Functions & Dispatchers"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": [
+                                                "<ul>",
+                                                "<li><b>SetButtonStatus:</b> This function is used to toggle between the active and passive states.</li>",
+                                                "<li><b>ButtonIsClicked:</b> This event dispatcher is used to simulate button click action.</li>",
+                                                "</ul>"
+                                            ]
+                                        },
+                                        {
+                                            "type": "note",
+                                            "value": [
+                                                "These properties are used in some other widget elements. It is possible that not all of these properties are used for any element and you may have to manually customize it."
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "E_FixedText",
+                                    "content": [
+                                        {
+                                            "type": "text",
+                                            "value": "This is for on-screen text that never changes."
+                                        },
+                                        {
+                                            "type": "header",
+                                            "value": "Properties"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": "<ul><li>It uses all the same text properties as to <i>E_Button</i> element.</li></ul>"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "E_VariableText",
+                                    "content": [
+                                        {
+                                            "type": "text",
+                                            "value": "This is for on-screen text that changes based on player actions."
+                                        },
+                                        {
+                                            "type": "header",
+                                            "value": "Properties"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": [
+                                                "<ul><li>It uses all the same text properties as to <i>E_Button</i> element.</li>",
+                                                "<li>It uses <i>SetNewText</i> function to change on-screen text.</li></ul>"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "E_IconElement",
+                                    "content": [
+                                        {
+                                            "type": "text",
+                                            "value": "This is an image based widget element. Wherever an image was needed, this was used."
+                                        },
+                                        {
+                                            "type": "header",
+                                            "value": "Properties"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": [
+                                                "<ul><li>It uses <i>SetNewImage</i> function to change on-screen image. Takes a Texture2D format file as input.</li></ul>"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Camera System",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "CameraDirector_SideScrollerCharacter"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/411/large/wraithcg-screenshot-2026-04-12-104031.jpg?1776058911",
+                            "align": "full",
+                            "caption": "CameraDirector_SideScrollerCharacter"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Responsible for management of camera screens.</li>",
+                                "<li>Existing camera rigs can be modified or new ones can be created based on your familiarity with the Camera Rigs.</li>",
+                                "<li>Lot of camera rigs are already present in the project for many different actions and widget screens.</li>",
+                                "<li>The camera rig evaluation logic has been modularized into different custom events for better readability.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Properties"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/072/025/large/wraithcg-screenshot-2026-04-13-123801.jpg?1776064451",
+                            "align": "right",
+                            "caption": "Available Camera Rigs"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "There are no configurable properties in this class."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Components",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "This template has been built with modular architecture in mind. Everything is organized in its own isolated space. Interfaces and player pawn reference serve as the communication channels :)"
+                },
+                {
+                    "type": "image",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/393/large/wraithcg-screenshot-2026-04-12-103312.jpg?1776058842",
+                    "align": "right",
+                    "caption": "Components"
+                }
+            ],
+            "subsections": [
+                {
+                    "title": "Player Attributes Component",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "BPC_PlayerAttributesComponent"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/070/416/large/wraithcg-screenshot-2026-04-12-104337.jpg?1776058925",
+                            "align": "full",
+                            "caption": "BPC_PlayerAttributesComponent"
+                        },
+                        {
+                            "type": "text",
+                            "value": "This component manages critical character and gameplay data."
+                        },
+                        {
+                            "type": "header",
+                            "value": "Attributes"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>Attributes (Title/Strength/Weakness):</b> Decor data for displaying on <i>CharacterSelection</i> & <i>CharacterCustomization</i> screens.</li>",
+                                "<li><b>PlayRagdollOnDeath:</b> This enables the character body to be able to ragdoll on colliding with the obstacles. If false, then any random valid animation montage from the <i>DeathMontages</i> array is played.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Emote"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>Wait Time:</b> It is the amount of wait before the player starts to emote on any screen.</li>",
+                                "<li><b>Blend Out Time:</b> Time taken to abruptly stop an emote.</li>",
+                                "<li><b>Min and Max Delays:</b> A random time between these is used to blend out an emote abruptly when there is an another emote sequence to play.</li>",
+                                "<li><b>Emote Data:</b> Data asset containing emoting sequences per widget screen.</li>",
+                                "<li><b>Start Gameplay with Emote:</b> Determines whether or not any emote is played when gameplay is started. Input is blocked for that moment and once emote is finished, then input is enabled.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Debug"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>DebugEmoteSequenceIndex:</b> This prints which emote sequence index is currently playing on the character.</li>",
+                                "<li><b>DebugEmoteAnimMontage:</b> This prints the name of the emote montage currently playing on the character.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Emote System",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "Emote Data Asset"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/627/645/large/wraithcg-screenshot-2026-01-21-235504.jpg?1769069362",
+                            "align": "full",
+                            "caption": "DA_EmoteActionData Setup"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<b>Emote Data Asset:</b> This is a map of emote data with respect to a widget screen.",
+                                "<ul>",
+                                "<li><b>Abort Previous:</b> This aborts the emote montage abruptly and starts a fresh sequence of emote montages available for a widget screen.</li>",
+                                "<li>If the previous emote sequence is not aborted, then the emote sequence related to previous widget screen is completed first and then the new emote sequence is used.</li>",
+                                "<li><b>AnimationMontages:</b> Contains the montage sequences.</li>",
+                                "<li><b>SequenceStart:</b> Contains the montage that is played for starting the sequence.</li>",
+                                "<li><b>SequenceEnd:</b> Mostly used as transition from sequence to another.</li>",
+                                "<li><b>PlaySequentially:</b> Whether or not to play all the montages in a sequential order. If not then any number of montages are selected and played for some time. When one sequence is complete, then another sequence  from AnimationMontages array is searched and selected for playing if available.</li></ul>"
+                            ]
+                        },
+                        {
+                            "type": "tip",
+                            "value": [
+                                "You can define more than one montage sequence like –",
+                                "<ul><li>Standing up -> Greeting the player -> Sitting down</li>",
+                                "<li>Taking out phone -> Using it -> Putting it down</li>"
+                            ]
+                        },
+                        {
+                            "type": "note",
+                            "value": [
+                                "Note that any montage needs time to start and end. If the widget screens are switched a lot, the player character may glitch when playing montages becaues every widget screen on re-initializes the emote system."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Character Selection System",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "System Overview"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/070/444/large/wraithcg-screenshot-2026-04-12-110102.jpg?1776058997",
+                            "align": "full",
+                            "caption": "DA_CharacterSelectionData Details"
+                        },
+                        {
+                            "type": "text",
+                            "value": "The character data is fetched frome <b>_DA_PDA_CharacterSelectionData</b>. In this project, all characters must inherit from <b>CBP_SideScrollerPlayerBase</b> to preserve running logic."
+                        },
+                        {
+                            "type": "header",
+                            "value": "Adding New Characters"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/441/large/wraithcg-screenshot-2026-04-12-110034.jpg?1776058993",
+                            "align": "full",
+                            "caption": "DA_CharacterData_xyz Details"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul><li>Right Click on <i>CBP_SideScrollerPlayerBase</i> -> Create Child Class.</li>",
+                                "<li>Create a new character data asset ( or duplicate existing) and fill the respective data.</li>",
+                                "<ul><li><b>Name: </b> Name of the character used for decorative purposes on the character selection screen.</li>",
+                                "<li><b>Class: </b> Assign the class of newly created child character blueprint.</li>",
+                                "<li><b>Description: </b> Fill in the lore details, background, or quick history of the character.</li>",
+                                "<li><b>Icon: </b> Assign an icon to your character displayed on the top-left of the screen.</li>",
+                                "<li><b>CustomizationData: </b> Assign the customization data for your character. For more info, check out the Character Customization Section.</li>",
+                                "<li>Add the new DA to <i>_DA_PDA_CharacterSelectionData</i>.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/070/436/large/wraithcg-screenshot-2026-04-12-105844.jpg?1776058988",
+                            "align": "full",
+                            "caption": "Character Setup Details"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Open the newly created child class of CBP_SideScrollerPlayerBase.</li>",
+                                "<li>Select the <i>UEFN</i> mesh component in the Components Panel.</li>",
+                                "<li>Assign your required skeletal mesh asset in the Properties Panel.</li>",
+                                "<li>Select the <i>ABP_GenericRetarget</i> as the anim blueprint class.</li>",
+                                "<li>In the Tags section, assign a unique tag carefully.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "ABP_GenericRetarget Setup"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/072/011/large/wraithcg-screenshot-2026-04-13-123008.jpg?1776064418",
+                            "align": "full",
+                            "caption": "ABP_GenericRetarget"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/072/014/large/wraithcg-screenshot-2026-04-13-123027.jpg?1776064424",
+                            "align": "right",
+                            "caption": "IKRetarget Example"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Prepare an IKRetargeter for your character.</li>",
+                                "<li>Make sure the UEFN character skeleton is used as Source and your character mesh should be Target asset.</li>",
+                                "<li>Select the IKMap variable in the ABP_GenericRetarget.</li>",
+                                "<li>In the details panel, add a new element in the map.</li>",
+                                "<li>Use the same tag that you previously assigned the UEFN component as Key. Assign the newly created IKRetargeter as Value.</li>",
+                                "<li>Click Compile then save.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Character Customization System",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "System Overview"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/095/793/622/large/wraithcg-screenshot-2026-01-26-194805.jpg?1769535319",
+                            "align": "right",
+                            "caption": "E_AttachmentPoints"
+                        },
+                        {
+                            "type": "text",
+                            "value": "You can add/rename categories by modifying the enumeration <i>E_AttachmentPoints</i> in <i>SideScroller > Components > Customization > Enumeration</i>."
+                        },
+                        {
+                            "type": "text",
+                            "value": "Customization data is fetched from the current character's data asset (<i>DA_PDA_CD_xyz</i>) which contains per-character selection and customization data. In this project, all characters must inherit <b>CBP_SandboxCharacter</b> to preserve running logic."
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>If you have setup your character class the right way then continue else refer to previous section for more info on Adding New Characters.</li>",
+                                "<li>Open your character's skeletal mesh.</li>",
+                                "<li>Setup sockets on your character skeleton.</li>",
+                                "<li>If you're using skeletal meshes such as clothing items, make sure they are rigged to the same character skeleton and properly weighted.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "tip",
+                            "value": "You can consider checking out how to set up sockets on your character's skeletal mesh on Youtube."
+                        },
+                        {
+                            "type": "header",
+                            "value": "Data Asset Setup"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/627/677/large/wraithcg-screenshot-2026-01-22-001424.jpg?1769069424",
+                            "align": "full",
+                            "caption": "DA_PDA_CCD_xyz Details"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>Go inside <i>Components > Customization > DA</i> folder and duplicate any existing data asset. Name it DA_PDA_CCD_yourCharacter.</li>",
+                                "<li>Open the data asset and click on the trash icon to empty the AttachmentData.</li>",
+                                "<li>Click the plus icon to add a new element in the map.</li>",
+                                "<li>The default value will be none. Click on it and select your desired category - Face, Torso, Legs or Shoes.</li>",
+                                "<li>Expand the section and click on plus icon to add items in that category.</li>",
+                                "<li>Always keep the first item in any category empty. This indicates the no attachments state for the character during the customization process.</li>",
+                                "<li>In the next item, fill the appropriate data -",
+                                "<ul>",
+                                "<li><b>isSkeletalMesh: </b> Determines if or not the item to be attached to the character is a skeletal mesh or a static mesh.</li>",
+                                "<li><b>SkeletalMesh: </b> If this item is a skeletal mesh, i.e. <i>isSkeletalMesh</i> is set to true, then select your desired mesh.</li>",
+                                "<li><b>AnimBPSkeletalMesh: </b> If this skeletal mesh has its own animation blueprint, then select it here or leave it empty.</li>",
+                                "<li><b>UseMasterPose: </b> Set this to true if you want this item to follow and character's animation data like clothing assets, else leave it false.</li>",
+                                "<li><b>StaticMesh: </b> Select your static mesh asset if this item is not a skeletal mesh.</li>",
+                                "<li><b>AttachmentCategory: </b> Select the category of this item. This category should be carefully set. The category of the map is used by the widget screen but the inside category is used by the player character.</li>",
+                                "<li><b>SocketName: </b> The socket to which this item will be attached. If <i>UseMasterPose</i> is set to true, then leave it None.</li>",
+                                "<li><b>ItemDescription: </b> This field can be used to write about the item's lore, defining features or properties.</li>",
+                                "</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Environment Creation Tool",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "Environment Creation Tool"
+                        },
+                        {
+                            "type": "text",
+                            "value": "This is a blueprint that can spawn static and skeletal meshes and blueprint actors based on specified spawn rules with randomization options."
+                        },
+                        {
+                            "type": "header",
+                            "value": "Overview of Environment Creation Tool Blueprint"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/095/627/680/large/wraithcg-screenshot-2026-01-22-001528.jpg?1769069427",
+                            "align": "full",
+                            "caption": "BP_EnvironmentBase"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<b>Properties Configuration: </b>",
+                                "<ul>",
+                                "<li><b>AutoUpdatePropsData: </b>This can be used if you do not want to update the blueprint after every minor update.</li>",
+                                "<li><b>ShowFloor: </b>This can be used to hide the default floor included with the environment. Hiding also turns off its collision properties and vice versa.</li>",
+                                "<li><b>FloorScaleVec: </b>This can be used to scale the default floor in any of the directions.</li>",
+                                "<li><b>StaticPropsData: </b>This is used to populate the environment with static meshes. Instanced Static Meshes are used for optimization purposes.</li>",
+                                "<li><b>SkeletalPropsData: </b>This is used to populate the environment with skeletal meshes. This does not supports instancing, as a result, only one component can be spawned per array element.</li>",
+                                "<li><b>BPPropsData: </b>This is used to populate the environment with blueprint actors. Though this does not supports instancing, you can still array these props.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ],
+                    "subsections": [
+                        {
+                            "title": "Static Mesh Props",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "Static Props Data Configuration"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/627/684/large/wraithcg-screenshot-2026-01-22-001623.jpg?1769069434",
+                                    "align": "full",
+                                    "caption": "Static Props Structure"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li><b>Transform:</b> This is used the as the base transform of the ISM component which will then spawn static meshes relative to it.</li>",
+                                        "<li><b>StaticMeshAsset:</b> This array contains the static mesh assets any of which can be used at a given moment.</li>",
+                                        "<li><b>RandomAsset:</b> This boolean toggles whether or not to use a random static mesh from the array.</li>",
+                                        "<li><b>AssetIdx:</b> If <i>RandomAsset</i> is false, then element at this index will be used. In case, this is an invalid index, then random static mesh will be used.</li>",
+                                        "<li><b>Count:</b> This determines the number of instances of the mesh in X, Y and Z directions respectively. Total number of instances spawned will be equal to the product these three values.</li>",
+                                        "<li><b>Offset:</b> This is used to add uniform gap between the instances in X, Y and Z directions respectively.</li>",
+                                        "<li><b>InstanceTransform:</b> This is useful for modifying the transforms of any instance.</li>",
+                                        "<li><b>RemoveInstances:</b> This is used for removing some of the instances of the static mesh.</li>",
+                                        "<li><b>RandomDeletionCount:</b> Based on this count, some of the instances will be deleted.</li>",
+                                        "<li><b>RandomSeed:</b> This boolean determines whether or not to use random seed for randomizing spawned instances.</li>",
+                                        "<li><b>SeedValue:</b> If <i>RandomSeed</i> is false, then the instances are transformed based on this seed value.</li>",
+                                        "<li><b>TransformationMin & MaxRanges:</b> This determines the maxium and minium extent of random transforms of the spawned instances.</li>",
+                                        "<li><b>MaterialData:</b> This is useful for randomizing the materials of the static meshes based on material indices.</li>",
+                                        "<li><b>CollisionEnabled:</b> This is useful if you want the player to collide with these instances.</li>",
+                                        "</ul>"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Skeletal Mesh Props",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "Skeletal Props Data Configuration"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/627/688/large/wraithcg-screenshot-2026-01-22-001659.jpg?1769069437",
+                                    "align": "full",
+                                    "caption": "Skeletal Props Structure"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li><b>Transform:</b> This is used the as the base transform of the ISM component which will then spawn static meshes relative to it.</li>",
+                                        "<li><b>SkeletalMeshAsset:</b> This array contains the skeletal mesh assets any of which can be used at a given moment.</li>",
+                                        "<li><b>RandomAsset:</b> This boolean toggles whether or not to use a random static mesh from the array.</li>",
+                                        "<li><b>AssetIdx:</b> If <i>RandomAsset</i> is false, then element at this index will be used. In case, this is an invalid index, then random static mesh will be used.</li>",
+                                        "<li><b>isAnimated:</b> This determines whether or not to animate the skeletal mesh when player is around.</li>",
+                                        "<li><b>MaterialData:</b> This is useful for randomizing the materials of the mesh based on material indices.</li>",
+                                        "<li><b>Animations:</b> List of animations from which any one can be looped repeatedly.</li>",
+                                        "<li><b>RandomSeed:</b> This boolean determines whether or not to use random seed for randomizing data for this skeletal mesh asset.</li>",
+                                        "<li><b>SeedValue:</b> If <i>RandomSeed</i> is false, then the randomizations occur based on this seed value.</li>",
+                                        "<li><b>TransformationMin & MaxRanges:</b> This determines the maxium and minium extent of random transforms of the spawned instances.</li>",
+                                        "<li><b>CollisionEnabled:</b> This is useful if you want the player to collide with this mesh.</li>",
+                                        "</ul>"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "BP Prop Actors",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "BP Prop Actors Data Configuration"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/460/large/wraithcg-screenshot-2026-04-13-102207.jpg?1776059032",
+                                    "align": "full",
+                                    "caption": "BP Props Structure"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li><b>UseDefaultTransform:</b> Toggle this if you wish to keep the base transforms of the original BP otherwise, it may be scaled relative to environment BP default scene root.</li>",
+                                        "<li><b>Transform:</b> This is used the as the base transform of the ISM component which will then spawn static meshes relative to it.</li>",
+                                        "<li><b>BPAsset:</b> This array contains the BP assets any of which can be used at a given moment. These are of type BP_DecorData but you can change it if you have other assets, otherwise create a child class of BP_DecorData and implement your custom BP logic.</li>",
+                                        "<li><b>RandomAsset:</b> This boolean toggles whether or not to use a random static mesh from the array.</li>",
+                                        "<li><b>AssetIdx:</b> If <i>RandomAsset</i> is false, then element at this index will be used. In case, this is an invalid index, then random static mesh will be used.</li>",
+                                        "<li><b>Count:</b> This determines the number of instances of the mesh in X, Y and Z directions respectively. Total number of instances spawned will be equal to the product these three values.</li>",
+                                        "<li><b>Offset:</b> This is used to add uniform gap between the instances in X, Y and Z directions respectively.</li>",
+                                        "<li><b>InstanceTransform:</b> This is useful for modifying the transforms of any instance.</li>",
+                                        "<li><b>RemoveInstances:</b> This is used for removing some of the instances of the static mesh.</li>",
+                                        "<li><b>RandomSeed:</b> This boolean determines whether or not to use random seed for randomizing spawned instances.</li>",
+                                        "<li><b>SeedValue:</b> If <i>RandomSeed</i> is false, then the instances are transformed based on this seed value.</li>",
+                                        "<li><b>TransformationMin & MaxRanges:</b> This determines the maxium and minium extent of random transforms of the spawned instances.</li>",
+                                        "<li><b>UniformScaleMultiplier:</b> Uses defined random scale multiplier from <b>MaxUniformScale</b> & <b>MinUniformScale</b> instead of scaling each axis individually.",
+                                        "</ul>"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Decor Data",
+                            "content": [
+                                {
+                                    "type": "header",
+                                    "value": "BP_DecorData"
+                                },
+                                {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/839/350/large/wraithcg-screenshot-2026-01-28-093230.jpg?1769648122",
+                                    "align": "full",
+                                    "caption": "BP_DecorData"
+                                },
+                                {
+                                    "type": "text",
+                                    "value": [
+                                        "<ul>",
+                                        "<li>These are custom blueprints that contain custom logic/assets etc;</li>",
+                                        "<li>These are spawned in the environment for increasing immersion.</li>",
+                                        "<i> e.g. flickering lights, randomized street sign spawner, etc;",
+                                        "</ul>"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Level Setup",
+            "content": [
+                {
+                    "type": "image",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/095/877/434/large/wraithcg-screenshot-2026-01-30-093411.jpg?1769746131",
+                    "caption": "World Settings",
+                    "align": "right"
+                },
+                {
+                    "type": "header",
+                    "value": "Play in a New Level"
+                },
+                {
+                    "type": "text",
+                    "value": [
+                        "<ul>",
+                        "<li>Go to <i>File -> New Level (Basic).</li>",
+                        "<li>Add <i>BP_PlatformManager</i> and <i>PlayerStart</i> at (0,0,0).</li>",
+                        "<li>Set GameMode to <i>BP_RunnerGM</i>.</li>",
+                        "<li>Press Play.</li>",
+                        "</ul>"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FAQs",
+            "content": [],
+            "subsections": [
+                {
+                    "title": "Mover Support",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "<b>Q: Does this project uses Mover based locomotion for Unreal Engine 5.7?</b><br><b>A:</b> No. This project uses the CharacterMovementComponent based locomotion. Mover support may be added in future updates."
+                        }
+                    ]
+                },
+                {
+                    "title": "Custom Motion Matching Setup",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "<b>Q: Does this project use a custom motion matching system?</b><br><b>A:</b> No. This project uses the default motion matching setup and animations from the <i>GameAnimationSampleProject (GASP)</i>. No custom motion matching setup was created specifically for this template."
+                        }
+                    ]
+                },
+                {
+                    "title": "Flickering Blueprints",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "<b>Q: Why do blueprints flicker- objects appear/disappear when modified, compiled, or moved?</b><br><b>A:</b> The construction script for the blueprint runs on every change in blueprint transforms and data. You can explicitly disable this by toggling either <i>Realtime Preview</i> or <i>Run Construction Script on Every Change</i> in the class defaults for the blueprint."
+                        }
+                    ]
+                },
+                {
+                    "title": "Add New Character",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "<b>Q: How do I add a new character?</b><br><b>A:</b> You must create a child class of <i>CBP_SandboxCharacter</i> to preserve the running logic. Then, create a Character Data Asset and add it to the <i>DA_PDA_CSD</i> list."
+                        }
+                    ]
+                },
+                {
+                    "title": "Understanding Save Data",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "Only high score, collected coins and remaining keys are tracked during any run. This project does not contains any dedicated save game manager. Character Customizations and Selections are lost on restarting the level."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Credits",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>ACTraceTraversal:</b> Special thanks to Umut Faruk.<br><b>Paragon Assets:</b> Epic Games."
+                }
+            ]
+        }
+    ]
+}

@@ -7,6 +7,13 @@
     "image": "https://media.fab.com/image_previews/gallery_images/b636b9c7-6030-4cfc-a191-984a9521039d/48dfb330-2ddc-40ee-98cf-f5685cf34c7a.jpg"
   },
   {
+    "id": "gasp-ss",
+    "title": "Side Scroller Game Template V1.0",
+    "description": "Complete guide to the Side Scroller Game Template V1.0 with Motion Matching.",
+    "path": "projects/gasp_sidescroller.json",
+    "image": "https://media.fab.com/image_previews/gallery_images/b636b9c7-6030-4cfc-a191-984a9521039d/48dfb330-2ddc-40ee-98cf-f5685cf34c7a.jpg"
+  },
+  {
     "id": "character-selection",
     "title": "Character Selection System V1.2",
     "description": "Extensive documentation for Character Selection System.",

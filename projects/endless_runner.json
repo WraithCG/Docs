@@ -144,7 +144,10 @@
                                 "Improved Vector Mode",
                                 "Unified PowerUps",
                                 "Varietal PowerUps",
-                                "Improving PowerUp Animation Modifier"
+                                "Improving PowerUp Animation Modifier",
+                                "Reduced Game Freezing on Starting First Time",
+                                "Fixed Platforms Destruction while Player is on the Platform",
+                                "Added a New Map Creation Type for Full Control"
                             ]
                         }
                     ]
@@ -1918,14 +1921,15 @@
                                 {
                                     "type": "tip",
                                     "value": [
-                                        "<li><b>Blocking</b> obstacles must be of type - <i>WorldDynamic</i>.",
+                                        "<li><b>Blocking</b> obstacles must be of type - <i>WorldDynamic</i> & collision property should be - <i>BlockAllDynamic</i>.",
                                         "<ul>",
                                         "<li>Blocking obstacles are those which allow climbing, vaulting, mantling, etc; traversals.",
                                         "</li></ul>",
-                                        "<li><b>UnderRoll</b> obstacles must be of type - <i>PhysicsBody</i>.",
+                                        "<li><b>UnderRoll</b> obstacles must be of type - <i>PhysicsBody</i> & collision property should be - <i>PhysicsActor</i>.",
                                         "<ul>",
                                         "<li>UnderRoll obstacles are those which allow sliding, rolling etc; traversals.",
                                         "</li></ul>",
+                                        "<li>All obstacles must have simple box collisions.</li>",
                                         "</ul>"
                                     ]
                                 }
@@ -2048,8 +2052,9 @@
                                     "value": [
                                         "The obstacle system is split into two main components - ",
                                         "<ul>",
-                                        "<li><b>BPCC_ObstacleBase:</b> Use for dynamic platforms generation where obstacles can occupy one of many defined positions.</li>",
-                                        "<li><b>BPSP_ObstacleBase:</b> Use for static and uniquely designed platforms.</li>",
+                                        "<li><b>BPCC_ObstacleBase:</b> Completely procedural platforms generation based on defined rules.</li>",
+                                        "<li><b>BPSP_ObstacleBase:</b> Use for static and uniquely designed platforms with partial procedural content.</li>",
+                                        "<li><b>BPFC_ObstacleBase:</b> Use for completely static and uniquely designed platforms.</li>",
                                         "</ul>"
                                     ]
                                 }
@@ -2266,30 +2271,26 @@
         {
             "title": "FAQs",
             "content": [
+            ],
+            "subsections": [   
+                {
+            "title": "Custom Animations",
+            "content": [
                 {
                     "type": "text",
-                    "value": "<b>Q: Does this project use a custom motion matching system?</b><br><b>A:</b> No. This project uses the default motion matching setup and animations from the <i>GameAnimationSampleProject (GASP)</i>. No custom motion matching setup was created specifically for this template."
-                },
-                {
-                    "type": "text",
-                    "value": "<b>Q: Why do blueprints flicker- objects appear/disappear when modified, compiled, or moved?</b><br><b>A:</b> The construction script for the blueprint runs on every change in blueprint transforms and data. You can explicitly disable this by toggling either <i>Realtime Preview</i> or <i>Run Construction Script on Every Change</i> in the class defaults for the blueprint."
-                },
-                {
-                    "type": "text",
-                    "value": "<b>Q: How do I add a new character?</b><br><b>A:</b> You must create a child class of <i>CBP_SandboxCharacter</i> to preserve the running logic. Then, create a Character Data Asset and add it to the <i>DA_PDA_CSD</i> list."
-                },
-                {
-                    "type": "text",
-                    "value": "<b>Q: Can I create a straight runner without lanes?</b><br><b>A:</b> Yes. The project includes a GameMode variant called 'Vector' specifically for straight endless runners, alongside the standard 3-Lane 'Runner' mode."
-                },
-                {
-                    "type": "text",
-                    "value": "<b>Q: How to change the lanes distance/gap?</b><br><b>A:</b> The <i>BP_RunnerGM</i> manages the lane data. You can customize the lane data in the class defaults inside Runner section."
-                },
-                {
-                    "type": "text",
-                    "value": "<b>Q: Why do my custom animations look wrong?</b><br><b>A:</b> The default GASP setup is generic. For best results, you need to add specific animations to the chooser or use the <i>CharacterAnimationModification</i> system to layer changes over the base motion matching set. Use the already present motion matching animation montages as reference for addition of new parkour montages."
-                },
+                    "value": [
+                        "<b>Q: Why do my custom animations look wrong?</b>",
+                    "<br><b>A:</b> The default GASP setup is generic. For best results: ",
+                    "<ul><li>You need to add specific animations to the chooser or use the <i>CharacterAnimationModification</i> system to layer changes over the base motion matching set.</li>",
+                    "<li>Use the already present motion matching animation montages as reference for addition of new parkour montages.</li>",
+                    "<li>You can add new animation data in <b>CHT_TraversalAnims</b> located in <i>Characters > UEFN_Mannequin > Animations > Traversal</i>.</li>"
+                    ]
+                }
+            ]
+        },
+        {
+            "title":"Missing Collectibles in Viewport",
+            "content":[
                 {
                     "type": "text",
                     "value": [
@@ -2303,8 +2304,49 @@
                         "</ul>"
                     ]
                 }
-            ],
-            "subsections": [                
+            ]
+        },
+        {
+            "title": "Custom Motion Matching Setup",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>Q: Does this project use a custom motion matching system?</b><br><b>A:</b> No. This project uses the default motion matching setup and animations from the <i>GameAnimationSampleProject (GASP)</i>. No custom motion matching setup was created specifically for this template."
+                }
+            ]
+        },{
+            "title": "Flickering Blueprints",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>Q: Why do blueprints flicker- objects appear/disappear when modified, compiled, or moved?</b><br><b>A:</b> The construction script for the blueprint runs on every change in blueprint transforms and data. You can explicitly disable this by toggling either <i>Realtime Preview</i> or <i>Run Construction Script on Every Change</i> in the class defaults for the blueprint."
+                }
+            ]
+        },{
+            "title": "Changing Default Lanes Data",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>Q: How to change the lanes distance/gap?</b><br><b>A:</b> The <i>BP_RunnerGM</i> manages the lane data. You can customize the lane data in the class defaults inside Runner section."
+                }
+            ]
+        },{
+            "title": "Add New Character",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>Q: How do I add a new character?</b><br><b>A:</b> You must create a child class of <i>CBP_SandboxCharacter</i> to preserve the running logic. Then, create a Character Data Asset and add it to the <i>DA_PDA_CSD</i> list."
+                }
+            ]
+        },{
+            "title": "Straight Runner",
+            "content": [
+                {
+                    "type": "text",
+                    "value": "<b>Q: Can I create a straight runner without lanes?</b><br><b>A:</b> Yes. The project includes a GameMode variant called 'Vector' specifically for straight endless runners, alongside the standard 3-Lane 'Runner' mode."
+                }
+            ]
+        },             
                 {
                     "title": "Extending Platforms",
                     "content": [
