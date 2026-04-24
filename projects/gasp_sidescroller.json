@@ -24,10 +24,9 @@
                     "value": [
                         "<b>Showcase Videos</b>:",
                         "<ul>",
-                        "<li><a id=\"link\" href=\"https://youtu.be/rBk-THbrwZw?si=R4loV-GOLNUfO3IA\">Version 1.3</a></li>",
-                        "<li><a id=\"link\" href=\"https://youtu.be/6Qa-VcjqNEQ?si=2MGE5pFnEhQg6_1V\">Version 1.2</a></li>",
-                        "<li><a id=\"link\" href=\"https://youtu.be/bw_BQr_kRls?si=3gg5rXyBBd7KaOnU\">Version 1.1</a></li>",
-                        "<li><a id=\"link\" href=\"https://youtu.be/K-krpW_bsBU?si=Nhzo6mmJOQ3qbzhd\">Version 1.0</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/TbToTPZcQyo?si=PZwfzN9ur5hzZIdw\">Version 1.0 - DayMap</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/XfbI47yvFHU?si=HdTO8vBalumEHniZ\">Version 1.0 - NightMap</a></li>",
+                        "<li><a id=\"link\" href=\"https://youtu.be/HvrCJiJpe5Y?si=7RxscYsv9kI853RL\">Version 1.0 - Features</a></li>",
                         "</ul>"
                     ]
                 },
@@ -49,8 +48,8 @@
                     "milestones": [
                         {
                             "version": "Version 1.0",
-                            "date": "October 2025",
-                            "status": "in-progress",
+                            "date": "April 2026",
+                            "status": "Completed",
                             "features": [
                                 "Simple Main Menu",
                                 "Character Death Screen",
@@ -63,6 +62,19 @@
                                 "Emote System",
                                 "Simple Interaction System",
                                 "Widgets Management System"
+                            ]
+                        },
+                        {
+                            "version": "Version 1.1",
+                            "date": "TBA",
+                            "status": "planned",
+                            "features": [
+                                "Push-Pull Objects",
+                                "More Interactables",
+                                "Item Inspection System",
+                                "Elevators",
+                                "Combat System",
+                                "Item Throw System"
                             ]
                         }
                     ]
@@ -119,7 +131,7 @@
             "content": [
                 {
                     "type": "image",
-                    "src": "MISSING",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/072/021/large/wraithcg-screenshot-2026-04-13-123553.jpg?1776064445",
                     "align": "right",
                     "caption": "Input Actions"
                 },
@@ -281,6 +293,12 @@
                                     "value": [
                                         "It is used for driving motion matched animations off of UEFN skeleton by retargeting at runtime based on respective IKRetargeter."
                                     ]
+                                },
+                                {
+                                    "type": "note",
+                                    "value": [
+                                        "See Epic's Documentation for adding new characters in Game Animation Sample Project. Same method applies here."
+                                    ]
                                 }
                             ]
                         }
@@ -304,7 +322,7 @@
                             "value": [
                                 "<ul>",
                                 "<li>Responsible for maintaining and communicating between different base elements in the project.",
-                                "<li><i>AddWidgetToScreen</i> interface call is executed by the game mode which in turn asks the <i>HUD_RunnerManager</i> to add the requested widget.</li>",
+                                "<li><i>AddWidgetToScreen</i> interface call is executed by the game mode which in turn asks the <i>HUD_SideScroller</i> to add the requested widget.</li>",
                                 "</ul>"
                             ]
                         },
@@ -1084,6 +1102,77 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "title": "Interaction System",
+                    "content": [
+                        {
+                            "type": "header",
+                            "value": "Interaction System"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/457/large/wraithcg-screenshot-2026-04-12-111856.jpg?1776059027",
+                            "align": "full",
+                            "caption": "BP_InteractiveActorBase"
+                        },
+                        {
+                            "type": "text",
+                            "value": "BP_InteractiveActorBase is the master class for handling all types of interactions."
+                        },
+                        {
+                            "type": "header",
+                            "value": "Properties"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>ActorName:</b> Used for displaying in interaction widgets.</li>",
+                                "<li><b>EndInteractionOnEndOverlap:</b> If true, the interaction action performed will be undone when sphere overlap ends. For example, if light is switched on, it will turn off automatically. It is useful for area based events like when player approaches something moves and then becomes idle.</li>",
+                                "<li><b>InteractionTet:</b> It is used for one-time interaction actors where <i>EndInteractionOnEndOverlap</i> is false. For example, for a light switch, the <i>InteractionTet</i> can be \"Press E to Activate\" <i>ActorName</i> is automatically appended at the end of the <i>InteractionTet</i>.</li>",
+                                "<li><b>ActiveStatusAsInteractionTet:</b> Appends Activation/Deactivation messages with respect to the actors status in the <i>InteractionTet</i>.</li>",
+                                "<li><b>InteractionData:</b> Useful for choice based interaction sequences.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/072/028/large/wraithcg-screenshot-2026-04-13-123948.jpg?1776064458",
+                            "align": "full",
+                            "caption": "Included Interaction Actor Examples"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/072/032/large/wraithcg-screenshot-2026-04-13-124009.jpg?1776064464",
+                            "align": "left",
+                            "caption": "BP_InteractiveCeilingLight"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/072/037/large/wraithcg-screenshot-2026-04-13-124116.jpg?1776064470",
+                            "align": "right",
+                            "caption": "BP_InteractiveHat"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/072/043/large/wraithcg-screenshot-2026-04-13-124158.jpg?1776064478",
+                            "align": "full",
+                            "caption": "BP_InteractiveLampPost"
+                        },
+                        {
+                            "type": "tip",
+                            "value": [
+                                "<ul>",
+                                "<li>Add any element that you wish to highlight to indicate interactivity with the actor using <b>AddElementsToHighlight</b> function as shown above.</li>",
+                                "<li>Then implement the <b>ActivateInteractionActor</b> and <b>DeactivateInteractionActor</b> according to your actor's interactivity requirements.</li>",
+                                "<li>Use <b>GetActiveStatus</b> for getting the current state of the interaction actor.</li>",
+                                "<li>Use <b>Set Active Status</b> to change the state of the interactive actor.</li>",
+                                "<li>Always check the active status of the actor before activating and deactivating the actor to avoid interaction spamming. See above for details.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -1092,7 +1181,7 @@
             "content": [
                 {
                     "type": "image",
-                    "src": "https://cdna.artstation.com/p/assets/images/images/095/877/434/large/wraithcg-screenshot-2026-01-30-093411.jpg?1769746131",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/072/018/large/wraithcg-screenshot-2026-04-13-123243.jpg?1776064440",
                     "caption": "World Settings",
                     "align": "right"
                 },
@@ -1105,9 +1194,14 @@
                     "value": [
                         "<ul>",
                         "<li>Go to <i>File -> New Level (Basic).</li>",
-                        "<li>Add <i>BP_PlatformManager</i> and <i>PlayerStart</i> at (0,0,0).</li>",
-                        "<li>Set GameMode to <i>BP_RunnerGM</i>.</li>",
-                        "<li>Press Play.</li>",
+                        "<li>Place <i>PlayerStart</i> at your desired starting location of the map.</li>",
+                        "<li>Set GameMode to <i>GM_SideScroller</i>.</li>",
+                        "<li>Add a post process volume.</li>",
+                        "<li>In the details panel, search for materials.</li>",
+                        "<li>Add a new element in the post process materials array.</li>",
+                        "<li>Select Asset Reference.</li>",
+                        "<li>Now search for and add <i>MI_Highlight</i> as the material.</li>",
+                        "<li>Now you're all done!</li>",
                         "</ul>"
                     ]
                 }
