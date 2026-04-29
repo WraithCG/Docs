@@ -7,9 +7,9 @@
             "content": [
                 {
                     "type": "image",
-                    "src": "https://media.fab.com/image_previews/gallery_images/b636b9c7-6030-4cfc-a191-984a9521039d/48dfb330-2ddc-40ee-98cf-f5685cf34c7a.jpg",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/555/497/large/wraithcg-1.jpg?1777397496",
                     "align": "full",
-                    "caption": "Endless Runner Game Template with Motion Matching (v1.4)"
+                    "caption": "Endless Runner Game Template with Motion Matching (v1.5)"
                 },
                 {
                     "type": "header",
@@ -32,8 +32,8 @@
                     ]
                 },
                 {
-                    "type": "tip",
-                    "value": "<b>Support:</b> For questions or assistance, please leave a comment on the product page or join the Discord server. Please consider rating and reviewing the asset if it proves useful."
+                    "type": "note",
+                    "value": "Please not that some images or text may not match their version in the project. For questions or assistance, please leave a comment on the product page or join the Discord server. Please consider rating and reviewing the asset if it proves useful."
                 }
             ]
         },
@@ -139,15 +139,21 @@
                             "date": "TBA",
                             "status": "in-progress",
                             "features": [
-                                "Moving Obstacles",
-                                "Inventory System",
-                                "Improved Vector Mode",
-                                "Unified PowerUps",
-                                "Varietal PowerUps",
-                                "Improving PowerUp Animation Modifier",
+                                "Niagara Speed Lines Effect",
+                                "Improved PowerUps Manager",
+                                "Create Different Game Modes with Data Assets",
+                                "Improved Environment Creation Tools",
                                 "Reduced Game Freezing on Starting First Time",
                                 "Fixed Platforms Destruction while Player is on the Platform",
-                                "Added a New Map Creation Type for Full Control"
+                                "Added a New Map Creation Type for Full Control",
+                                "Added Loading Screen",
+                                "Fixed Level Sequences not playing on all Levels",
+                                "Added GameInstance - Now Selected Character, Run Record, collected Coins and Keys are Saved!",
+                                "Removed Static Mesh Coins - Added Blueprint Actor based Animated Coins/Collectibles",
+                                "Improved Demo Maps",
+                                "Added Settings Menu",
+                                "Reorganized Blueprints for better readability"
+
                             ]
                         }
                     ]
@@ -182,16 +188,12 @@
                     "value": "<b>Collision:</b> A new object trace channel called \"Collectibles\" has been added (Default Behavior: Ignore)."
                 },
                 {
-                    "type": "text",
-                    "value": "<b>GameModeVariant:</b> A new game mode variant of infinite runner - Vector, has been added to the project."
-                },
-                {
                     "type": "header",
                     "value": "Save Game Data"
                 },
                 {
                     "type": "text",
-                    "value": "<ul><li><b>No Save Data:</b> The project does not use a GameInstanceClass. Data is not saved between levels or game replays.</li><li><b>Customization Reset:</b> Any customization items attached to a character are lost if the character is changed.</li></ul>"
+                    "value": "<ul><li><b>BP_RunnerGameInstance</b> is responsible for storing data during runs.</li><li>Run record, total coins & keys collected and the chosen character is saved.</li><li>There is no saveGameObject used. As a result, data is saved as long as either the editor or the packaged-game is played. Once closed/exited, all the data is lost.</ul>"
                 },
                 {
                     "type": "header",
@@ -202,16 +204,8 @@
                     "value": "The project is intended to be used as a base starting project."
                 },
                 {
-                    "type": "header",
-                    "value": "Miscellaneous"
-                },
-                {
-                    "type": "text",
-                    "value": "<b>UI: </b>Record Label and Value in the top-right corner of screen is partially implemented. As long as you do not change levels, the value of record will be updated and read from gameMode."
-                },
-                {
                     "type": "image",
-                    "src": "https://media.fab.com/image_previews/gallery_images/c9babf88-20de-41b8-b032-fed5836433f4/54d0f005-6df6-4015-8be7-ba16cc74d9fe.jpg",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/574/137/large/wraithcg-screenshot-2026-04-28-115950.jpg?1777449482",
                     "align": "right",
                     "caption": "UI Display"
                 },
@@ -222,7 +216,7 @@
             ]
         },
         {
-            "title": "What’s New in v1.4",
+            "title": "What’s New in v1.5",
             "content": [
                 {
                     "type": "header",
@@ -230,13 +224,13 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://media.fab.com/image_previews/gallery_images/b8623b31-617f-411c-9d37-fae3a06874b3/e6535139-8102-4bcf-aae3-21098e58ea3a.jpg",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/574/169/large/wraithcg-gamemodes.jpg?1777449521",
                     "align": "right",
                     "caption": "Game Modes"
                 },
                 {
                     "type": "text",
-                    "value": "<i>Character Selection System V1.2</i>, <i>Character Customization System V1.1</i>, <i>Widgets Management System V1.1</i> have been improved to align them with the project."
+                    "value": "<i>Character Selection System V1.3</i>, <i>Character Customization System V1.2</i>, <i>Widgets Management System V1.2</i> have been improved to align them with the project."
                 },
                 {
                     "type": "header",
@@ -244,7 +238,7 @@
                 },
                 {
                     "type": "text",
-                    "value": "There are 2 different infinite runner game variants - <ul><li><b>Normal (Runner) Mode:</b> 3 Lane FP/TP Runner</li><li><b>Vector Mode:</b> Single Lane Sidescroller Infinite Runner</li></ul>"
+                    "value": "Now the creation of new and unique game modes has been unified using Data Asset configurations. It is to eliminate the redundant logic & dependencies across systems and making the template easily accessible for extension. "
                 },
                 {
                     "type": "header",
@@ -252,33 +246,18 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://cdna.artstation.com/p/assets/images/images/095/793/612/large/wraithcg-screenshot-2026-01-27-154133.jpg?1769535304",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/574/192/large/wraithcg-powerups.jpg?1777449546",
                     "align": "left",
                     "caption": "Power Ups"
                 },
                 {
                     "type": "text",
                     "value": [
-                        "<ul><li>5 Preset powerUps - SuperJump, Invincibility, Magnet, DoubleCoins, ScoreBooster.</li>",
-                        "<li>PowerUps attachments for visual indication.</li>",
+                        "<ul><li>More PowerUps have been added.</li>",
+                        "<li>The logic for different powerUps has been unified with toggle controls to enable/disable any ability & create complex Powerups easily.</li>",
                         "<li>Improved PowerUp management logic.</li>",
-                        "<li>Fixed bugs related to invincibility.</li>",
-                        "<li>PowerUp widgets are now spawned and displayed on screen.</li>",
-                        "<li>PowerUps are reset when an already equipped powerUp is equipped again.</li>",
-                        "<li>Character Animations can now be modified when powerUps are equipped based on three categories - FullBody, LeftBody and RightBody.</li></ul>"
-                    ]
-                },
-                {
-                    "type": "header",
-                    "value": "Animations"
-                },
-                {
-                    "type": "text",
-                    "value": [
-                        "<ul><li>New Character Animation Modification System that can be easily extended to micro-control creation and modification of existing animations for unique character animations by blending each body part with an unique animation during an action.</li>",
-                        "<li>The traversal animations chooser has been modified to include only run-related traversal animations.</li>",
-                        "<li>A copy of original traversal animation chooser is also present for reference to add new animations.</li>",
-                        "<li>The PowerUps System also uses a similar system to blend modifier animations.</li></ul>"
+                        "<li>Fixed jumping & collection bug related to invincibility.</li>",
+                        "</ul>"
                     ]
                 },
                 {
@@ -287,7 +266,7 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://cdnb.artstation.com/p/assets/images/images/095/727/025/large/wraithcg-screenshot-2026-01-25-084328.jpg?1769362245",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/574/223/large/wraithcg-camera.jpg?1777449597",
                     "align": "right",
                     "caption": "Camera System"
                 },
@@ -319,18 +298,16 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://cdnb.artstation.com/p/assets/images/images/095/793/581/large/wraithcg-screenshot-2026-01-27-162230.jpg?1769535263",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/574/152/large/wraithcg-ect.jpg?1777449500",
                     "align": "right",
-                    "caption": "Spawn Zones"
+                    "caption": "Environment Creation Tools"
                 },
                 {
                     "type": "text",
                     "value": [
                         "<ul>",
-                        "<li>Environment Creation Tools have been included in the project.</li>",
-                        "<li>Support for both static and animatable skeletal meshes.</li>",
-                        "<li>Control over how far from the player, the skeletal mesh animation plays.</li>",
-                        "<li>Ability to create environments separately and attach them to platforms.</li>",
+                        "<li>Environment Creation Tools have been upgraded in the project.</li>",
+                        "<li>Now all the static meshes, skeletal meshes and the blueprint actor props transform with the defaultSceneRoot correctly.</li>",
                         "</ul>"
                     ]
                 },
@@ -348,18 +325,15 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://cdnb.artstation.com/p/assets/images/images/095/793/675/large/wraithcg-screenshot-2026-01-26-182339.jpg?1769535384",
+                    "src": "https://cdna.artstation.com/p/assets/images/images/098/555/432/large/wraithcg-screenshot-2026-04-28-124311.jpg?1777397326",
                     "align": "right",
-                    "caption": "Toggle Controls"
+                    "caption": "Blueprint Actor Coins"
                 },
                 {
                     "type": "text",
                     "value": [
                         "<ul><li>More toggle controls  over gameplay mechanics,</li>",
-                        "<li>Mesh attachements when PowerUps are equipped,</li><li>Spawned PowerUps Indicator,</li>",
-                        "<li>Roll mechanic on forced jump ends.</li>",
-                        "<li>Control movement sensitivity in First Person Camera.</li>",
-                        "<li>Obstacles and Collectibles Spawning logic updated.</li>",
+                        "<li>Replaced Static Mesh Coins with Blueprint Actor based Coins.</li>",
                         "<li>Reorganized blueprints and commented code for better readability.</li>",
                         "<li>Fixed some collision issues.</li>",
                         "<li>Solved the issue of disappearing mouse cursor on widget screens.</li></ul>"
@@ -533,7 +507,7 @@
                         },
                         {
                             "type": "image",
-                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/727/011/large/wraithcg-screenshot-2026-01-25-083957.jpg?1769362200",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/555/418/large/wraithcg-screenshot-2026-04-28-052913.jpg?1777397297",
                             "align": "full",
                             "caption": "BP_RunnerGM"
                         },
@@ -544,7 +518,6 @@
                                 "<li>Responsible for managing platform spawn data based on the selected game mode variant.</li>",
                                 "<li><i>AddWidgetToScreen</i> interface call is executed by the game mode which in turn asks the <i>HUD_RunnerManager</i> to add the requested widget.</li>",
                                 "<li>Also manages game variant based <i>CurvedWorldShading</i>.</li>",
-                                "<li>Dummy implementation for saving player run stats.</li>",
                                 "<li>Lifecycle of a platform: <ul><li><b>AddFloor:</b> Spawns initial tiles.</li><li><b>ExtendFloor:</b> Spawns new tile when player overlaps detector.</li><li><b>DeleteFloor:</b> Removes oldest tile to maintain performance.</li></ul></li>",
                                 "</ul>"
                             ]
@@ -556,20 +529,36 @@
                         {
                             "type": "text",
                             "value": [
-                                "<ul>",
-                                "<li><b>TimeToDeleteEarliestFloor:</b> Determines the duration (in seconds) after which the platform will be removed/destroyed if the player has overlapped with the respective detector box.</li>",
-                                "<li><b>VectorLane:</b> The lane position where the platforms must be spawned for vector game variant.</li>",
-                                "<li><b>NormalLaneData:</b> The lane positions where the platforms must be spawned and character movement is allowed for normal runner game variant.</li>",
-                                "<li><b>NormalRunnerZones:</b> The data asset that contains the configuration for spawn zones that can be spawned for normal runner game variant.</li>",
-                                "<li><b>VectorRunnerZones:</b> The data asset that contains the configuration for spawn zones that can be spawned for vector game variant.</li>",
-                                "<li><b>WidgetDataBase:</b>The data asset that contains the configurations for adding widgets to screen on demand.</li>",
-                                "</ul>"
+                                "<b>DA GameMode:</b> Useful for configuring unique endless runner game modes."
                             ]
                         },
                         {
-                            "type": "tip",
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/555/422/large/wraithcg-screenshot-2026-04-28-052925.jpg?1777397302",
+                            "align": "full",
+                            "caption": "PDA_GameMode DA"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/555/427/large/wraithcg-screenshot-2026-04-28-052952.jpg?1777397306",
+                            "align": "left",
+                            "caption": "Example GameMode Data Assets"
+                        },
+                        {
+                            "type":"text",
                             "value": [
-                                "You can change how many floors to at add the start of the game & every time extension is requested by changing <i>StartWithFloors</i> & <i>ExtensionCount</i> in <b>BPC_EndlessAttributesComponent</b> respectively."
+                                "<ul>",
+                                "<li><b>StartWithFloors:</b> The number of platforms which will be spawned for the first time when the player starts running.</li>",
+                                "<li><b>FloorCheckTimer:</b> The looping timer at which the floor will measure its distance from player character and destory itself if the distance is greater than <i>DistanceToDeleteFloor</i>.</li>",
+                                "<li><b>DistanceToDeleteFloor:</b> The maximum distance between player and floor after which the floor is destroyed.</li>",
+                                "<li><b>StartLaneIdx:</b> The player must snap to this lane index from the available lanes in <i>LaneData</i> when the game is started.</li>",
+                                "<li><b>SpawnZoneData:</b> The platforms to be spawned in this game mode. Different game modes can spawn different zones.</li>",
+                                "<li><b>LaneData:</b> The lane positions where the platforms must be spawned and character movement is allowed for normal runner game variant.</li>",
+                                "<li><b>EnvironmentSpawnDirection:</b> This controls whether or not the environment is spawned on both the sides (normal third person runner) or one side either left/right only.</li>",
+                                "<li><b>CameraSystem:</b> Determines the primary camera type for the player-<ul><li>FirstPerson</li><li>ThirdPerson</li><li>SideCamera</li></ul></li>",
+                                "<li><b>WidgetDataBase:</b>The data asset that contains the configurations for adding widgets to screen on demand.</li>",
+                                "<li><b>UseCurvedWorldShader:</b>It is only used during gameplay and controls whether curved world shading is used in this game mode or not.</li>",
+                                "</ul>"
                             ]
                         },
                         {
@@ -577,8 +566,7 @@
                             "value": [
                                 "<ul><li>Make sure the player controller class is set to - <b>PC_RunnerController</b>.</li>",
                                 "<li>Make sure the HUD class is set to - <b>HUD_RunnerManager</b>.</li>",
-                                "<li>Make sure the default pawn class is set to first character in your character selection list data asset.</li>",
-                                "<li>If the timer for deleting a floor expires, but the character is still on the floor, then it will fall into oblivion.</li></ul>"
+                                "</ul>"
                             ]
                         }
                     ]
@@ -958,7 +946,7 @@
                         },
                         {
                             "type": "image",
-                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/727/025/large/wraithcg-screenshot-2026-01-25-084328.jpg?1769362245",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/574/223/large/wraithcg-camera.jpg?1777449597",
                             "align": "full",
                             "caption": "CameraDirector_SandboxCharacter"
                         },
@@ -1009,7 +997,7 @@
                 },
                 {
                     "type": "image",
-                    "src": "https://cdna.artstation.com/p/assets/images/images/095/839/328/large/wraithcg-screenshot-2026-01-28-193815.jpg?1769648050",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/574/111/large/wraithcg-screenshot-2026-04-28-110236.jpg?1777449440",
                     "align": "right",
                     "caption": "Components"
                 }
@@ -1137,6 +1125,7 @@
                                 "<li><b>FP DynamicRotationOffset:</b> Useful for adjusting the camera rotation relative to character's head in FirstPerson mode.</li>",
                                 "<li><b>High&Low SensitivityHeadBlend:</b> Respectively determine the extent of head wobbling of running and other animations on the player character's head to stabilize the motion during various actions.</li>",
                                 "<li><b>SlowDownTime:</b> To further control the head wobbling, you can adjust the time dilation on the player character.</li>",
+                                "<li><b>FOV:</b> Controls Field of View of character when in First person mode.</li>",
                                 "</ul>"
                             ]
                         },
@@ -1243,6 +1232,10 @@
                             "src": "https://cdnb.artstation.com/p/assets/images/images/095/793/669/large/wraithcg-screenshot-2026-01-26-192420.jpg?1769535375",
                             "align": "full",
                             "caption": "Character Setup Details"
+                        },
+                        {
+                            "type": "tip",
+                            "value": "For more details regarding setting up retargeting assets, see <a href=\"https://dev.epicgames.com/documentation/unreal-engine/game-animation-sample-project-in-unreal-engine?lang=en-US\">Epic's Documentation for Game Animation Sample Project</a> and go to Importing Your Character section."
                         }
                     ]
                 },
@@ -1327,7 +1320,7 @@
                         },
                         {
                             "type": "image",
-                            "src": "https://cdna.artstation.com/p/assets/images/images/095/793/642/large/wraithcg-screenshot-2026-01-26-194422.jpg?1769535339",
+                            "src": "https://cdnb.artstation.com/p/assets/images/images/098/575/953/large/wraithcg-screenshot-2026-04-29-141633.jpg?1777453581",
                             "align": "full",
                             "caption": "BPC_CollectorComponent"
                         },
@@ -1335,12 +1328,9 @@
                             "type": "text",
                             "value": [
                                 "<ul>",
-                                "<li><b>CollectionRadius:</b> Radius of the sphere tracer that works independently from death tracer.</li>",
-                                "<li><b>ForwardCollectionTraceDistance:</b> Forward offset/end point of the sphere trace slightly ahead of the player.</li>",
-                                "<li><b>DrawDebugType:</b> Useful for debugging collection tracer sphere.</li>",
-                                "<li><b>CollectionTimer:</b> Timer looping value for collection tracer.</li>",
-                                "<li><b>CollectibleDisappearanceFX:</b> Plays when any collectible is collected by the player.</li>",
-                                "<li><b>CollectiblePickUpSFX:</b> SoundFX that plays when character collects the collectible.</li>",
+                                "<li>It is reponsible for keeping track of collected collectibles/coins.</li>",
+                                "<li>Use the function <i>GetCollectiblesCount</i> for fetching the number of collectibles with the component reference.</li>",
+                                "<li>Use the function <i>IncrementCollectiblesCount</i> for increasing the total collectibles count with value Count.</li>",
                                 "</ul>"
                             ]
                         },
@@ -1348,31 +1338,45 @@
                             "type": "note",
                             "value": [
                                 "<ul><li>The below set of properties are used for spawning collectibles on platform.</li>",
-                                "<li>Collectibles are Instanced Static Meshes (ISMs) and do not currently animate towards the player.</li>"
+                                "<li>Collectibles are now Blueprint Actor based Coins which can be animated. A simple demonstration is present in BP_Coin.</li>"
                             ]
                         },
                         {
-                            "type": "header",
-                            "value": "CurrentISMData"
-                        },
-                        {
                             "type": "image",
-                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/877/433/large/wraithcg-screenshot-2026-01-30-093049.jpg?1769746124",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/555/432/large/wraithcg-screenshot-2026-04-28-124311.jpg?1777397326",
                             "align": "full",
-                            "caption": "CurrentISMData"
+                            "caption": "BP_Coin"
                         },
                         {
                             "type": "text",
                             "value": [
                                 "<ul>",
-                                "<li><b>CollectibleMesh:</b> Static Mesh to spawn via Instanced Static Mesh Component.</li>",
-                                "<li><b>CollectibleCollisionType:</b> This must be <i>Collectibles</i> only unless you wish to use a new object type for further extension. Other types are prone to interfere with other gameplay behaviors.</li>",
-                                "<li><b>LaneIdx:</b> This controls on which lane collectibles are spawned depending on lane data fetched from game mode.</li>",
-                                "<li><b>No.OfCollectibles:</b> This determines the number of instances to spawn over the obstacles.</li>",
-                                "<li><b>RowLocation:</b> This is for adjusting the the collectibles in a lane.</li>",
-                                "<li><b>Scale:</b> This changes the size of obstacles.</li>",
-                                "<li><b>CorrectiveZRotation:</b> This is for changing the default rotation of the collectibles if they aren’t facing the desired direction on Z axis.</li>",
-                                "<li><b>GapBetweenInstances:</b> This controls how far apart the collectibles instances will be from one another.</li>",
+                                "<li><b>CoinValue:</b> It the value of the coin added to character's collectible count on overlap.</li>",
+                                "<li><b>SoundEffect:</b> This is played when the coin is picked.</li>",
+                                "<li><b>NiagaraEffect:</b> This is spawned when the coin is picked.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "CurrentCollectibleData"
+                        },
+                        {
+                            "type": "image",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/575/954/large/wraithcg-screenshot-2026-04-29-142039.jpg?1777453584",
+                            "align": "full",
+                            "caption": "CurrentCollectibleData"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>CollectibleBP:</b> Takes the class reference of the type of collectibles to spawn. The default value is <i>BP_Coin class</i>. You can either change the implementation in BP_Coin or create a child class and implement your own collectible.</li>",
+                                "<li><b>LaneIdx:</b> This controls on which lane collectibles are spawned depending on lane data fetched from game mode. If the requested lane idx is not found, then the coins are not spawned.</li>",
+                                "<li><b>No.OfCollectibles:</b> This determines the number of coins to spawn in a line.</li>",
+                                "<li><b>RowLocation:</b> This is for adjusting the location of the collectibles in a lane.</li>",
+                                "<li><b>Scale:</b> This changes the size of collectibles.</li>",
+                                "<li><b>GapBetweenInstances:</b> This controls how far apart the collectibles will be from one another.</li>",
                                 "</ul>"
                             ]
                         }
@@ -1406,7 +1410,8 @@
                         {
                             "type": "tip",
                             "value": [
-                                "To remove curve world shading, remove the <i>MF_CurveShaderFunction</i> from the <i>M_Solid</i>, <i>M_Grid</i> & <i>M_Glow</i> shaders."
+                                "To remove curve world shading, remove the <i>MF_CurveShaderFunction</i> from the <i>M_Solid</i>, <i>M_Grid</i> & <i>M_Glow</i> shaders.",
+                                "<br>Curved World Shading can be toggled on/off in game mode Data Assets."
                             ]
                         },
                         {
@@ -1499,7 +1504,7 @@
                         },
                         {
                             "type": "image",
-                            "src": "https://cdna.artstation.com/p/assets/images/images/095/627/680/large/wraithcg-screenshot-2026-01-22-001528.jpg?1769069427",
+                            "src": "https://cdna.artstation.com/p/assets/images/images/098/574/152/large/wraithcg-ect.jpg?1777449500",
                             "align": "full",
                             "caption": "BP_EnvironmentBase"
                         },
@@ -1673,7 +1678,7 @@
                                 },
                                 {
                                     "type": "image",
-                                    "src": "https://cdna.artstation.com/p/assets/images/images/095/839/362/large/wraithcg-screenshot-2026-01-28-154226.jpg?1769648145",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/574/192/large/wraithcg-powerups.jpg?1777449546",
                                     "align": "full",
                                     "caption": "BPC_PowerUpsManager"
                                 },
@@ -1682,8 +1687,8 @@
                                     "value": [
                                         "<ul>",
                                         "<li>This component handles duration and effects of the equipped powerUps.</li>",
-                                        "<li>Execution logic for any powerUp depends on its category, present in its respective EventGraph.</li>",
-                                        "<li>Version 1.4 introduces resetting powerUps. When one powerUp that is equipped already is equipped again, then the previous one is instantly terminated and new one is started.</li>",
+                                        "<li>Execution logic is now unified and controlled by toggle controls for mixing powers in a single powerUp.</li>",
+                                        "<li>Version 1.4 introduced resetting powerUps. When one powerUp that is equipped already is equipped again, then the previous one is instantly terminated and new one is started.</li>",
                                         "</ul>"
                                     ]
                                 },
@@ -1714,7 +1719,7 @@
                             "content": [
                                 {
                                     "type": "image",
-                                    "src": "https://cdnb.artstation.com/p/assets/images/images/095/793/615/large/wraithcg-screenshot-2026-01-27-154018.jpg?1769535310",
+                                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/575/959/large/wraithcg-screenshot-2026-04-29-143346.jpg?1777453588",
                                     "align": "full",
                                     "caption": "PDA_PowerData"
                                 },
@@ -1847,16 +1852,6 @@
                                         "<li>It internally has a child actor component that is assigned a platform<i>(BP_MapBase Class)</i> by the gameMode<i>(BP_RunnerGM)</i> when it is constructed.</li>",
                                         "<li>The gameMode<i>(BP_RunnerGM)</i> keeps track of the platform to spawn based on defined rules.</li>",
                                         "</ul>"
-                                    ]
-                                },
-                                {
-                                    "type": "header",
-                                    "value": "BP_Floor_Temp_Use"
-                                },
-                                {
-                                    "type": "text",
-                                    "value": [
-                                        "This is a blank copy of <i>BP_Floor</i> for scale reference. It serves no real use in the game or any other system."
                                     ]
                                 }
                             ]
@@ -2004,7 +1999,7 @@
                                         },
                                         {
                                             "type": "image",
-                                            "src": "https://cdnb.artstation.com/p/assets/images/images/095/839/365/large/wraithcg-screenshot-2026-01-28-154259.jpg?1769648155",
+                                            "src": "https://cdna.artstation.com/p/assets/images/images/098/575/962/large/wraithcg-screenshot-2026-04-29-143543.jpg?1777453592",
                                             "align": "full",
                                             "caption": "BP_AdvObstaclesBase"
                                         },
@@ -2105,10 +2100,13 @@
                                                 "</li></ul>",
                                                 "<li><b>CollectibleDB:</b>An array of structures for configuring properties of more than one or same type of collectibles. See <i>CollectionComponent</i> for more details regarding each element.",
                                                 "<li><b>Left & Right EnvironmentClass:</b> Select the environment class asset that you wish to spawn here.</li>",
+                                                "<li><b>Gap:</b> Controls the distance between the spawn points for the obstacles.</li>",
+                                                "<li><b>PointsOnEachLane:</b> Controls how many obstacle spawn points are spawned on each lane. For example, in a 3 lane system with 5 points each will give total spawn points range of (0-14). The current range is (0-8).</li>",
                                                 "<li><b>Offset:</b> Controls the distance of the obstacles from the start position of the map.</li>",
                                                 "<li><b>SpawnCollectibles:</b> Controls whether or not the data from <i>CollectibleDB</i> can be used for spawning collectibles.</li>",
                                                 "<li><b>DebugPlatform:</b>It is useful for dubugging the object placement on the platform when game is not running.</li>",
                                                 "<li><b>DebugArray:</b>It is useful for checking placement of various obstacles on these lane values when game is not running.</li>",
+                                                "<li><b>SpawnEnvironmentAt:</b>It is useful for checking placement of environment child actors on either side and both side of the platform.</li>",
                                                 "</ul>"
                                             ]
                                         },
@@ -2141,9 +2139,9 @@
                                             "type": "text",
                                             "value": [
                                                 "<ul>",
-                                                "<li>Used for pre-configured, non-random platforms.</li>",
+                                                "<li>Used for semi-pre-configured, non-random platforms.</li>",
                                                 "<li>A fixed obstacle from ObstacleData is spawned at the of the pre-defined spawn index with the given physics behavior.</li>",
-                                                "<li>These are intended for creation of unique platforms.</li>",
+                                                "<li>These are intended for creation of partially unique & partially random platforms.</li>",
                                                 "</ul>"
                                             ]
                                         },
@@ -2155,6 +2153,8 @@
                                             "type": "text",
                                             "value": [
                                                 "<ul>",
+                                                "<li><b>Gap:</b> Controls the distance between the spawn points for the obstacles.</li>",
+                                                "<li><b>PointsOnEachLane:</b> Controls how many obstacle spawn points are spawned on each lane. For example, in a 3 lane system with 5 points each will give total spawn points range of (0-14). The current range is (0-8).</li>",
                                                 "<li><b>Offset:</b> Controls the distance of the obstacles from the start position of the map.</li>",
                                                 "<li><b>SpawnPowerUp:</b> Controls whether or not to spawn powerUps on this platform.</li>",
                                                 "<li><b>SpawnCollectibles?:</b> Boolean to toggle whether or not collectibles can be spawned on this platform.</li>",
@@ -2177,6 +2177,7 @@
                                                 "<li><b>Left & Right EnvironmentClass:</b> Select the environment class<i>(EnvironmentCreationTool)</i> asset that you wish to spawn here.</li>",
                                                 "<li><b>DebugPlatform:</b>It is useful for dubugging the object placement on the platform when game is not running.</li>",
                                                 "<li><b>DebugArray:</b>It is useful for checking placement of various obstacles on these lane values when game is not running.</li>",
+                                                "<li><b>SpawnEnvironmentAt:</b>It is useful for checking placement of environment child actors on either side and both side of the platform.</li>",
                                                 "</ul>"
                                             ]
                                         },
@@ -2187,6 +2188,31 @@
                                                 "<li>Remember to turn off <i>DebugPlatform</i> toggle before finalizing the platform.</li>",
                                                 "<li>Ensure static meshes have their origin at the bottom-center and collision set to <i>BlockAllDynamic</i> for <i>Blocking Obstacles</i> and <i>PhysicsBody</i> for <i>UnderRolls</i>.</li>",
                                                 "<li>Use <i>Offset</i> to push the obstacles towards the center of the map.</li>",
+                                                "</ul>"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "title": "BPFC Obstacle System",
+                                    "content": [
+                                        {
+                                            "type": "header",
+                                            "value": "BPFC_ObstacleBase"
+                                        },
+                                        {
+                                            "type": "image",
+                                            "src": "https://cdna.artstation.com/p/assets/images/images/098/576/502/large/wraithcg-screenshot-2026-04-29-145943.jpg?1777455071",
+                                            "align": "full",
+                                            "caption": "BPFC Parameters"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "value": [
+                                                "<ul>",
+                                                "<li>Used for completely manual control with no randomization of any type of assets platforms.</li>",
+                                                "<li>A fixed obstacle from ObstacleData is spawned at the of the pre-defined spawn index with the given physics behavior.</li>",
+                                                "<li>These are intended for creation of unique platforms.</li>",
                                                 "</ul>"
                                             ]
                                         }
@@ -2247,7 +2273,7 @@
             "content": [
                 {
                     "type": "image",
-                    "src": "https://cdna.artstation.com/p/assets/images/images/095/877/434/large/wraithcg-screenshot-2026-01-30-093411.jpg?1769746131",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/098/576/497/large/wraithcg-screenshot-2026-04-29-145006.jpg?1777455067",
                     "caption": "World Settings",
                     "align": "right"
                 },
@@ -2260,8 +2286,8 @@
                     "value": [
                         "<ul>",
                         "<li>Go to <i>File -> New Level (Basic).</li>",
-                        "<li>Add <i>BP_PlatformManager</i> and <i>PlayerStart</i> at (0,0,0).</li>",
-                        "<li>Set GameMode to <i>BP_RunnerGM</i>.</li>",
+                        "<li>Add <i>PlayerStart</i> at the origin or behind on the x-axis. Make sure there is some floor for the character to stand and run to reach till the origin.</li>",
+                        "<li>Set GameMode to your desired child class of <i>BP_RunnerGM</i>.</li>",
                         "<li>Press Play.</li>",
                         "</ul>"
                     ]
