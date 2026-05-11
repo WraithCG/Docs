@@ -1,19 +1,19 @@
 {
-  "id": "character-customization-v1.1",
-  "title": "Character Customization System (v1.1)",
+  "id": "character-customization-v1.2",
+  "title": "Character Customization System (v1.2)",
   "sections": [
     {
       "title": "Overview",
       "content": [
         {
           "type": "image",
-          "src": "https://media.fab.com/image_previews/gallery_images/a5fd60f7-cad2-41e0-a7e1-b3b1bd35f6dd/e634bff9-1e80-44aa-9f75-b13f25ac951c.jpg",
+          "src": "https://cdnb.artstation.com/p/assets/images/images/098/927/243/large/wraithcg-wraithcg-customization.jpg?1778481949",
           "align": "full",
           "caption": "Character Customization System"
         },
         {
           "type": "text",
-          "value": "This document provides a complete guide for integrating the <b>Character Customization System (v1.1)</b> into your Unreal Engine projects. It is designed for modularity, using interface-driven communication and decomposed widgets to ensure effortless integration and extension."
+          "value": "This document provides a complete guide for integrating the <b>Character Customization System (v1.2)</b> into your Unreal Engine projects. It is designed for modularity, using interface-driven communication and decomposed widgets to ensure effortless integration and extension."
         },
         {
           "type": "tip",
@@ -47,17 +47,14 @@
               "date": "October 2025",
               "status": "completed",
               "features": [
-                "Emote System ",
                 "New Customization Assets",
-              "New Customization Assets",
-"Rewritten logic for better functionality",
-"Support for paired and weighted skeletal meshes",
-"Instead of creating a data asset for different categories, now each character has single data asset containing all the data",
-"Fixed Disappearing mouse pointer on menu screens",
-"Fixed camera rotation",
-"Added camera rig for each customization category",
+                "Rewritten logic for better functionality",
+                "Support for paired and weighted skeletal meshes",
+                "Instead of creating a data asset for different categories, now each character has single data asset containing all the data",
+                "Fixed Disappearing mouse pointer on menu screens",
+                "Added camera rig for each customization category",
                 "Simplified Widget Blueprints",
-                "Unification of elements and styles across the screens "
+                "Unification of elements and styles across the screens"
               ]
             },
             {
@@ -65,9 +62,8 @@
               "date": "TBA",
               "status": "planned",
               "features": [
-                "Circular Character Customization List",
-                "Save Customizations Per Character",
-                "Item Inspection"
+                "Save Customizations for the character in GameInstance",
+                "Persistent Customizations between Level Changes"
               ]
             }
           ]
@@ -85,8 +81,8 @@
           "type": "text",
           "value": [
             "<ul><li><b>Modular Design:</b> <ul><li>The system is heavily interface-driven.</li> <li>Widgets are decomposed into reusable elements to unify style and logic across different screens.</li><li>The system is decoupled from the Character Selection System to maintain modularity and reduce complexity.</li></ul></li>",
-            "<li><b>GameMode Logic:</b> The <i>BP_GM_CSD</i> GameMode handles the management of on-screen widgets (creation, removal, and updates) .<br></li>",
-            "<li><b>Player Controller:</b> The <i>PC_CSD</i> manages current character data and fetch logic (Next/Previous).</li></ul>"
+            "<li><b>GameMode Logic:</b> The <i>BP_GM_CharCustomSystem</i> GameMode handles the management of on-screen widgets (creation, removal, and updates) .<br></li>",
+            "<li><b>GameInstance:</b> The <i>BP_CustomizationGameInstance</i> customisation persistence across levels.</li></ul>"
           ]
         },
         {
@@ -94,27 +90,35 @@
           "value": "Migration Guide"
         },
         {
+          "type":"image",
+          "src":"https://cdna.artstation.com/p/assets/images/images/098/927/650/large/wraithcg-screenshot-2026-05-11-113642.jpg?1778483626",
+          "caption":"Function To Copy",
+          "align":"right"
+        },
+        {
           "type": "text",
           "value": [
             "<ul><li>Copy or Migrate entire CharacterCustomizationSystem folder to your project.</li>",
-            "<li>Add BPC_PlayerAttributesComponent to your character.</li>",
-            "<li>Create data assets of type DA_PDA_CharacterCustomizationData_xyz.</li>",
-            "<li>Fill up relevant information in the details panel of BPC_PlayerAttributesComponent in your character blueprint.</li>",
-            "<li>If your gameMode is light-weight without project-breaking hard references to it and there is no widgetManager, then simply switch to the BP_GM_CharacterCustomization.</li>",
-            "<li>If you would like to use all the menus for your game in your own GameMode or WidgetManager, consider copying all the code in your gameMode blueprint.</li>",
-            "<li>Add the BPI_PlayerInterface to your characters and copy addNewAccessoryComponent and removeCurrentAccessoryComponent from demo character to your characters.</li>",
-            "<li>Implement the interfaces functions as they are in demo character.</li>",
-            "<li>If you only wish to integrate character customization only, create an input event that draws the character customization screen.</li></ul>"
+            "<li>Copy the functions in FunctionToCopy category inside <i>BP_Char01</i> into your character blueprint - addNewAccessoryComponent, removeCurrentAccessoryComponent and updateCustomisationData.</li>",
+            "<li>Implement <i>BPI_PlayerInterface</i> in your character blueprint.</li>",
+            "<li>Implement the functions in category <i>CCS | Core</i> for customisation features. For full integration including the menu and the camera, see BP_Char01 and re-implement all the interface functions in your character blueprint.</li>",
+            "<li>You will need to create new variables. Right click on any missing variable and then select PromoteToVariable.</li>",
+            "<li>On the EventBeginPlay, call UpdateCustomisationData.</li>",
+            "<li>If you only wish to integrate character customization only, create an input event that creates the character customization screen widget - W_Customisation.</li>",
+            "<li>For full integration, add gameplayCamera component to your character and in the asset properties, select - CA_CBP.</li>",
+            "<li>Then, in the worldSettings for the level, select - BP_GM_CharCustomSystem.</li>",
+            "<li>Set DefaultPawnClass to your character blueprint class.</li>",
+            "<li>Make sure your character skeleton has all the required sockets for adding customisation items.</li></ul>"
           ]
         },
         {
           "type": "note",
-          "value": "If you switched to using your custom GameMode and PlayerController, you may need to fix up some references in character selection widget - W_Selection"
+          "value": "If you switched to using your custom GameMode, you will need to write custom logic for creating and removing customisation widget from viewport."
         }
       ]
     },
     {
-      "title": "What's New in v1.1",
+      "title": "What's New in v1.2",
       "content": [
         {
           "type": "header",
@@ -123,11 +127,15 @@
         {
           "type": "text",
           "value": [
-            "<ul><li><b>Widget Architecture:</b> Screens are simplified by reusable Widget Elements (prefixed with E_).</li>",
-            "<li><b>Emotes:</b> Characters now play emote animations during the selection process.</li>",
-            "<li><b>Quality of Life:</b> <ul><li>Fixed camera rotation during gameplay</li>",
+            "<ul><li><b>BP_CustomisationGameInstance:</b> Your customisations are safe between level changes. Make sure the gameInstanceClass in ProjectSettings is set to BP_CustomisationGameInstance.</li>",
             "<li>Fixed cursor visibility issues.</li></ul>"
           ]
+        },
+        {
+          "src":"https://cdnb.artstation.com/p/assets/images/images/098/927/647/large/wraithcg-screenshot-2026-05-11-113058.jpg?1778483618",
+          "type":"image",
+          "align":"full",
+          "caption": "Set gameInstance class to BP_CustomisationGameInstance in project properties"
         }
       ]
     },
@@ -140,54 +148,22 @@
         },
         {
           "type": "image",
-          "src": "https://cdnb.artstation.com/p/assets/images/images/095/627/647/large/wraithcg-screenshot-2026-01-21-235711.jpg?1769069370",
+          "src": "https://cdna.artstation.com/p/assets/images/images/098/925/850/large/wraithcg-screenshot-2026-05-11-103041.jpg?1778476973",
           "align": "full",
-          "caption": "Character Interfaces Graph"
+          "caption": "BP_Char01"
         },
         {
           "type": "text",
           "value": "The graphs and actions are respectfully spread out across different categories so that everything is easier to find and modify. Categories include: EventGraph, and InterfaceGraph."
+        },
+        {
+          "type": "image",
+          "src": "https://cdnb.artstation.com/p/assets/images/images/098/925/889/large/wraithcg-screenshot-2026-05-11-104131.jpg?1778477063",
+          "align": "full",
+          "caption": "Copy these functions and implement corresponding interface functions!"
         }
       ],
       "subsections": [
-        {
-          "title": "Player Attributes Component",
-          "content": [
-            {
-              "type": "header",
-              "value": "BPC_PlayerAttributesComponent"
-            },
-            {
-              "type": "image",
-              "src": "https://cdna.artstation.com/p/assets/images/images/095/627/646/large/wraithcg-screenshot-2026-01-21-235545.jpg?1769069366",
-              "align": "full",
-              "caption": "Player Attributes Details"
-            },
-            {
-              "type": "text",
-              "value": "This component manages critical character data:"
-            },
-            {
-              "type": "text",
-              "value": [
-                "<ul>",
-                "<li><b>Décor Data:</b> Used on Character Selection Screen to highlight qualities (modify via <i>S_Attributes</i> struct).</li>",
-                "<li><b>Ragdoll on Death:</b> Determines if the player character ragdolls when overlapping the death trigger.</li>",
-                "<li><b>Aim Offsets:</b> Adjusts camera translation/rotation when aiming in First Person mode.</li>",
-                "<li><b>Emote</b>:<ul>",
-                "<li><b>Wait Time:</b> It is the amount of wait before the player starts to emote on any screen.</li>",
-                "<li><b>Blend Out Time:</b> Time taken to abruptly stop an emote.</li>",
-                "<li><b>Min and Max Delays:</b> A random time between these is used to blend out an emote abruptly when there is an another emote sequence to play.</li>",
-                "<li><b>Emote Data:</b> Data asset containing emoting sequences per widget screen.</li></ul></li>",
-                "<li><b>Debug:</b>",
-                "<ul><li><b>Debug Sequence Index:</b>This prints which emote sequence index is currently playing on the character.</li>",
-                "<li><b>Debug Anim Montage:</b> This prints the name of the emote montage currently playing on the character.</li></ul></li>",
-                "<li><b>DefaultBoomOffset & DefaultBoomOffset_Crouched:</b> Present in 5.7 version of the project because the gameplay camera rig does not works without boom offset ( I might be wrong though).</li>",
-                "</li></ul>"
-              ]
-            }
-          ]
-        },
         {
           "title": "Character Customization System",
           "content": [
@@ -197,7 +173,7 @@
             },
             {
               "type": "text",
-              "value": "Customization data is fetched from the current character's data asset (<i>DA_PDA_CD_xyz</i>) which contains per-character selection and customization data.In this project, all characters must inherit <b>CBP_SandboxCharacter</b> to preserve running logic."
+              "value": "Customization data is fetched from the current character's data asset (<i>DA_PDA_CD_xyz</i>) which contains customization data. In this project, all characters should inherit <b>BP_Char01</b> to preserve running logic."
             },
             {
               "type": "text",
@@ -211,24 +187,30 @@
               ]
             },
             {
-              "type": "tip",
-              "value": "You can consider checking out how to set up sockets on your character's skeletal mesh on Youtube."
-            },
-            {
               "type": "header",
               "value": "Data Asset Setup"
             },
             {
               "type": "image",
-              "src": "https://cdnb.artstation.com/p/assets/images/images/095/627/677/large/wraithcg-screenshot-2026-01-22-001424.jpg?1769069424",
-              "align": "full",
-              "caption": "DA_PDA_CCD_xyz Details"
+              "src": "https://cdnb.artstation.com/p/assets/images/images/098/925/859/large/wraithcg-screenshot-2026-05-11-103258.jpg?1778476994",
+              "align": "left",
+              "caption": "Skeletal Mesh DA Setup"
+            },
+            {
+              "type": "image",
+              "src": "https://cdnb.artstation.com/p/assets/images/images/098/925/861/large/wraithcg-screenshot-2026-05-11-103415.jpg?1778476999",
+              "align": "right",
+              "caption": "Static Mesh DA Setup"
+            },
+            {
+              "type": "tip",
+              "value": "You can consider checking out how to set up sockets on your character's skeletal mesh on Youtube."
             },
             {
               "type": "text",
               "value": [
                 "<ul>",
-                "<li>Go inside <i>Components > Customization > DA</i> folder and duplicate any existing data asset. Name it DA_PDA_CCD_yourCharacter.</li>",
+                "<li>Go inside <i>Blueprints > Data</i> folder and duplicate any existing data asset.</li>",
                 "<li>Open the data asset and click on the trash icon to empty the AttachmentData.</li>",
                 "<li>Click the plus icon to add a new element in the map.</li>",
                 "<li>The default value will be none. Click on it and select your desired category - Face, Torso, Legs or Shoes.</li>",
@@ -269,7 +251,7 @@
             },
             {
               "type": "image",
-              "src": "https://placehold.co/800x400/111/FFF?text=World+Settings+Setup",
+              "src": "https://cdnb.artstation.com/p/assets/images/images/098/925/869/large/wraithcg-screenshot-2026-05-11-103637.jpg?1778477016",
               "align": "full",
               "caption": "Camera System Overview"
             }
@@ -288,10 +270,10 @@
           "type": "text",
           "value": [
             "The system uses <b>BPI_PlayerInterface</b> across multiple classes:</li",
-                "<ul><li><b>Widget:</b> Receives messages to disable buttons.</li>",
+            "<ul><li><b>Widget:</b> Receives messages to disable buttons.</li>",
             "<li><b>GameMode:</b> Handles construction/deconstruction of widgets.</li>",
             "<li><b>Character:</b> Receives input availability messages.</li",
-                "</ul>"
+            "</ul>"
           ]
         },
         {
@@ -305,12 +287,12 @@
             "Add the <b>BPC_PlayerAttributes</b> component to store CustomizationData data assets.",
             "Config:",
             "<ul><li>Create data assets of type <i>DA_PDA_xyz</i>.</li",
-                "<li>"
+            "<li>"
           ]
         },
         {
           "type": "image",
-          "src": "https://placehold.co/800x400/222/FFF?text=Character+Blueprint+Graph",
+          "src": "https://cdnb.artstation.com/p/assets/images/images/098/927/649/large/wraithcg-screenshot-2026-05-11-113548.jpg?1778483622",
           "align": "full",
           "caption": "Character Event Graph Setup"
         }
@@ -324,26 +306,18 @@
           "value": "Character Customization Screen"
         },
         {
-          "type": "text",
-          "value": "Displays attributes (Name, Strength, Rating) fetched via interfaces. You can toggle <b>CircularList</b> to enable infinite scrolling through the character array. Character display name is editable in the <i>BPC_Attributes</i> component."
-        },
-        {
           "type": "image",
-          "src": "https://placehold.co/800x400/555/FFF?text=Selection+Screen+UI",
+          "src": "https://cdnb.artstation.com/p/assets/images/images/098/925/875/large/wraithcg-screenshot-2026-05-11-103725.jpg?1778477031",
           "align": "full",
           "caption": "Character Customization User Interface"
         },
         {
           "type": "header",
-          "value": "Main Menu"
+          "value": "Menu Screens"
         },
         {
           "type": "text",
-          "value": "A refined sample main menu is included."
-        },
-        {
-          "type": "tip",
-          "value": "To change styling (buttons, text), modify the elements in the <i>Widgets > Elements</i> folder."
+          "value": "A refined sample main menu, pause menu and a credits screen is included."
         }
       ]
     },
@@ -358,15 +332,15 @@
           "type": "text",
           "value": [
             "To initialize the system:",
-            "<ul><li>Set <b>GameMode Override</b> to <i>BP_GM_CharacterCustomizationSystem</i>.</li>",
-            "<li>Set <b>Player Controller Class</b> to <i>BP_PC_CharacterCustomizationSystem</i></li></ul>."
+            "<ul><li>Set <b>GameMode Override</b> to <i>BP_GM_CharCustomSystem</i>.</li>",
+            "<li>Set <b>DefaultPawnClass</b> to your character class.</li></ul>."
           ]
         },
         {
-          "type": "image",
-          "src": "https://placehold.co/800x400/111/FFF?text=World+Settings+Setup",
-          "align": "full",
-          "caption": "Configuring World Settings for playing in new level."
+          "type":"image",
+          "align":"full",
+          "caption":"Gamemode overview",
+          "src":"https://cdna.artstation.com/p/assets/images/images/098/925/890/large/wraithcg-screenshot-2026-05-11-104157.jpg?1778477069"
         }
       ]
     },
@@ -400,7 +374,11 @@
         },
         {
           "type": "text",
-          "value": "<b>Development:</b> wRAITH_cg<br><b>Feedback:</b> Please consider rating and reviewing the asset if it proves useful for your project. Good rated and reviewed products are more likely to be recommended to others."
+          "value": [
+            "<b>Development:</b> wRAITH_cg<br><b>Feedback:</b> Please consider rating and reviewing the asset if it proves useful for your project. Good rated and reviewed products are more likely to be recommended to others Thanks :).",
+            "<br>If you face any difficulty using this asset, please join discord or email me your issue! I will be really happy to help."
+          ]
+
         }
       ]
     }
