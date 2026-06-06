@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxClose = document.getElementById('lightbox-close');
+    const fontBtn = document.getElementById('font-btn');
 
     let allProjectsIndex = [];
     let currentProjectData = null;
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(homeBtn) homeBtn.addEventListener('click', showLandingPage);
     if(projectSelector) projectSelector.addEventListener('change', (e) => loadProjectDocumentation(e.target.value));
     if(themeBtn) themeBtn.addEventListener('click', () => { cycleTheme(); initStarfield(); });
+    if(fontBtn) fontBtn.addEventListener('click', cycleFont);
     
     // Search Listener
     if(searchInput) {
@@ -289,6 +291,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (block.type === 'tip') { el = document.createElement('div'); el.className = 'tip-block'; el.innerHTML = `<i class='bx bx-bulb'></i> <div>${parseRichText(block.value)}</div>`; }
                 else if (block.type === 'code') { el = document.createElement('pre'); el.className = 'code-block'; el.textContent = Array.isArray(block.value) ? block.value.join('\n') : block.value; }
                 
+                // Tables
+                else if (block.type === 'table') {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'table-wrapper';
+                    const table = document.createElement('table');
+                    table.className = 'custom-table';
+                    
+                    // Table Headers
+                    if (block.headers && block.headers.length > 0) {
+                        const thead = document.createElement('thead');
+                        const tr = document.createElement('tr');
+                        block.headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.innerHTML = parseRichText(headerText);
+                            tr.appendChild(th);
+                        });
+                        thead.appendChild(tr);
+                        table.appendChild(thead);
+                    }
+                    
+                    // Table Rows
+                    if (block.rows && block.rows.length > 0) {
+                        const tbody = document.createElement('tbody');
+                        block.rows.forEach(row => {
+                            const tr = document.createElement('tr');
+                            row.forEach(cellText => {
+                                const td = document.createElement('td');
+                                td.innerHTML = parseRichText(cellText);
+                                tr.appendChild(td);
+                            });
+                            tbody.appendChild(tr);
+                        });
+                        table.appendChild(tbody);
+                    }
+                    
+                    wrap.appendChild(table);
+                    el = wrap;
+                }
+                
                 // Images
                 else if (block.type === 'image') {
                     const wrap = document.createElement('div'); wrap.className = `img-wrap ${block.align}`;
@@ -380,10 +421,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // View Switching & Utils
-    function showDocsInterface() { landingView.classList.add('hidden'); docsView.classList.remove('hidden'); }
-    function showLandingPage() { docsView.classList.add('hidden'); landingView.classList.remove('hidden'); if(projectSelector) projectSelector.value = ""; }
-    function openLightbox(src) { if(lightboxImg) lightboxImg.src = src; if(lightbox) lightbox.classList.add('active'); }
-    function closeLightbox() { if(lightbox) lightbox.classList.remove('active'); setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); }
+    function showDocsInterface() { 
+        landingView.classList.add('hidden'); 
+        docsView.classList.remove('hidden'); 
+        document.body.style.overflowY = 'hidden'; // Lock body scroll inside docs
+        window.scrollTo(0, 0); // Scroll to top when opening docs
+    }
+    
+    function showLandingPage() { 
+        docsView.classList.add('hidden'); 
+        landingView.classList.remove('hidden'); 
+        if(projectSelector) projectSelector.value = ""; 
+        document.body.style.overflowY = 'auto'; // Restore body scroll on front page
+        window.scrollTo(0, 0); // Scroll to top when returning to home
+    }
+    
+    function openLightbox(src) { 
+        if(lightboxImg) lightboxImg.src = src; 
+        if(lightbox) lightbox.classList.add('active'); 
+        document.body.style.overflowY = 'hidden'; // Lock scroll when viewing images
+    }
+    
+    function closeLightbox() { 
+        if(lightbox) lightbox.classList.remove('active'); 
+        setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); 
+        // Restore to auto ONLY if we are back on the landing page
+        document.body.style.overflowY = docsView.classList.contains('hidden') ? 'auto' : 'hidden'; 
+    }
 
 });
 
@@ -396,6 +460,26 @@ function cycleTheme() {
     body.classList.remove(...themes);
     if (!current) body.classList.add(themes[0]);
     else { const idx = themes.indexOf(current); if (idx + 1 < themes.length) body.classList.add(themes[idx + 1]); }
+}
+
+function cycleFont() {
+    const fonts = ['font-default', 'font-modern', 'font-classic'];
+    const body = document.body;
+    let current = 'font-default'; 
+    
+    // Check what font class is currently active
+    fonts.forEach(f => { if(body.classList.contains(f)) current = f; });
+    
+    // Remove all font classes
+    body.classList.remove(...fonts);
+    
+    // Cycle to the next one
+    const idx = fonts.indexOf(current); 
+    if (idx + 1 < fonts.length) {
+        body.classList.add(fonts[idx + 1]); 
+    } else {
+        body.classList.add(fonts[0]); // Loops back to your original Science Gothic/Geom
+    }
 }
 
 function applyRandomTheme() {
