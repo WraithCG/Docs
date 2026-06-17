@@ -59,8 +59,8 @@
             },
             {
               "version": "Version 1.2",
-              "date": "TBA",
-              "status": "planned",
+              "date": "May 2025",
+              "status": "completed",
               "features": [
                 "Save Customizations for the character in GameInstance",
                 "Persistent Customizations between Level Changes"

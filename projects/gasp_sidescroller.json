@@ -73,10 +73,14 @@
                                 "Customisation Save",
                                 "Mover Component Support",
                                 "Movement Enhancement",
-                                "Spline Path Movement",
-                                "Weapon System",
+                                "Spline Path Movement - Mover & CMC",
+                                "Advanced Weapon System",
                                 "Basic Combat System",
-                                "Projectiles Throw System"
+                                "Projectiles Throw System",
+                                "2D Aiming System & Rotation",
+                                "Better Emotes",
+                                "Status Effects System",
+                                "Mid-Air Jumps"
                             ]
                         },
                         {
@@ -90,7 +94,8 @@
                                 "Elevators",
                                 "Refined Combat System",
                                 "Enemies",
-                                "Better NPCs"
+                                "Better NPCs",
+                                "Inventory System"
                             ]
                         }
                     ]
@@ -165,7 +170,7 @@
                 {
                     "type": "image",
                     "src": "https://cdnb.artstation.com/p/assets/images/images/099/347/229/large/wraithcg-screenshot-2026-05-25-151601.jpg?1779705782",
-                    "align": "right",
+                    "align": "full",
                     "caption": "Input Actions"
                 },
                 {
@@ -226,33 +231,28 @@
                                             "Press"
                                         ],
                                         [
-                                            "Primary Weapon Slot",
-                                            "1",
-                                            "Press"
-                                        ],
-                                        [
-                                            "Secondary Weapon Slot",
-                                            "2",
+                                            "Toggle Primary-Secondary Slot",
+                                            "Q",
                                             "Press"
                                         ],
                                         [
                                             "SideArm Weapon Slot",
-                                            "3",
+                                            "Z",
                                             "Press"
                                         ],
                                         [
                                             "Equip Melee Weapon",
-                                            "9",
+                                            "1",
                                             "Press"
                                         ],
                                         [
                                             "Equip Ranged Weapon",
-                                            "8",
+                                            "2",
                                             "Press"
                                         ],
                                         [
                                             "Unequip All Weapons",
-                                            "0",
+                                            "3",
                                             "Press"
                                         ],
                                         [
@@ -275,7 +275,7 @@
                 {
                     "type": "image",
                     "src": "https://cdna.artstation.com/p/assets/images/images/098/070/394/large/wraithcg-screenshot-2026-04-12-103338.jpg?1776058849",
-                    "align": "right",
+                    "align": "full",
                     "caption": "Core Game Systems"
                 },
                 {
@@ -352,6 +352,12 @@
                                     "caption": "MovementGraph"
                                 },
                                 {
+                                    "type": "image",
+                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/426/large/wraithcg-screenshot-2026-04-12-105144.jpg?1776058959",
+                                    "align": "right",
+                                    "caption": "InterfaceGraph"
+                                },
+                                {
                                     "type": "header",
                                     "value": "Setting Up a New Character"
                                 },
@@ -360,13 +366,8 @@
                                     "value": [
                                         "See <b>Components > Character Selection System</b> for detailed instructions."
                                     ]
-                                },
-                                {
-                                    "type": "image",
-                                    "src": "https://cdna.artstation.com/p/assets/images/images/098/070/426/large/wraithcg-screenshot-2026-04-12-105144.jpg?1776058959",
-                                    "align": "right",
-                                    "caption": "InterfaceGraph"
                                 }
+                                
                             ]
                         },
                         {
@@ -448,9 +449,9 @@
                                         ],
                                         [
                                             "Physics Impulse Effect",
+                                            "Yes (better)",
                                             "Yes",
-                                            "No",
-                                            "It is supported in CMC by default. I simply do not know how to add it in Mover character."
+                                            "It is supported in CMC by default. There is a work-around used for Mover characters."
                                         ],
                                         [
                                             "Aiming Rotation ",
@@ -553,7 +554,7 @@
                             "value": [
                                 "<ul>",
                                 "<li>Responsible for management of on-screen widgets.</li>",
-                                "<li>Based on widgets configuration, correspondiing level sequences are played in the background of the widget screens.</li>",
+                                "<li>Based on widgets configuration, corresponding level sequences are played in the background of the widget screens.</li>",
                                 "<li>It is called by the game mode internally when any widget is requested.</li>",
                                 "<li>It is based on <i>Widgets Management System V1.1</i>.</li>",
                                 "</ul>"
@@ -567,12 +568,12 @@
                             "type": "text",
                             "value": [
                                 "<ul>",
-                                "<li><b>WidgetsDB:</b> The data asset that contains configurations regarding various widgets to be added to viewport on demand.</li>",
+                                "<li><b>WidgetsDB:</b> The data asset that contains configurations regarding various widgets to be added to viewport on demand. It is fetched from gameMode.</li>",
                                 "</ul>"
                             ]
                         },
                         {
-                            "type": "note",
+                            "type": "tip",
                             "value": [
                                 "Do not modify <b>CachedWidget</b> directly/indirectly inside or from outside. It is categorized under <i>Privates</i> but not marked private to allow instant access to game mode when required."
                             ]
@@ -583,14 +584,14 @@
                             "title": "Setup",
                             "content": [
                                 {
+                                    "type": "header",
+                                    "value": "Adding New Widget Screen"
+                                },
+                                {
                                     "type": "image",
                                     "src": "https://cdnb.artstation.com/p/assets/images/images/098/070/449/large/wraithcg-screenshot-2026-04-12-110810.jpg?1776059007",
                                     "align": "left",
                                     "caption": "E_WidgetScreen"
-                                },
-                                {
-                                    "type": "header",
-                                    "value": "Adding New Widget Screen"
                                 },
                                 {
                                     "type": "text",
@@ -828,6 +829,10 @@
                                 "<li>Since both enemy and combat systems are very basic, therefore when hit, a simple montage played as a hitReaction using the BPC_WeaponComponent.</li>",
                                 "</ul>"
                             ]
+                        },
+                        {
+                            "type":"note",
+                            "value":"The properties and systems relating to enemy will change greatly in next versions."
                         }
                     ]
                 }
@@ -912,6 +917,23 @@
                                 "<li><b>DebugEmoteAnimMontage:</b> This prints the name of the emote montage currently playing on the character.</li>",
                                 "</ul>"
                             ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Look Ahead"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>LookAheadDistance:</b> The distance from the character to trace for obstacles.</li>",
+                                "<li><b>LookAheadRadius:</b> The radius of the sphere tracer used for tracing.</li>",
+                                "<li><b>LookAheadStartOffset:</b> Small distance offset from player character from where tracing starts.</li>",
+                                "<li><b>LookAheadDebugDraw:</b> Whether or not to draw debug traces.</li>",
+                                "<li><b>LookAheadZOffsets:</b> The offsets which are used for tracing. A trace is fired for every element present here.</li>",
+                                "<li><b>LookAheadObjects:</b> An array that contains the ObjectTypes which supposedly block player movement path.</li>",
+                                "</ul>"
+                            ]
                         }
                     ]
                 },
@@ -936,8 +958,6 @@
                                 "<li><b>Abort Previous:</b> This aborts the emote montage abruptly and starts a fresh sequence of emote montages available for a widget screen.</li>",
                                 "<li>If the previous emote sequence is not aborted, then the emote sequence related to previous widget screen is completed first and then the new emote sequence is used.</li>",
                                 "<li><b>AnimationMontages:</b> Contains the montage sequences.</li>",
-                                "<li><b>SequenceStart:</b> Contains the montage that is played for starting the sequence.</li>",
-                                "<li><b>SequenceEnd:</b> Mostly used as transition from sequence to another.</li>",
                                 "<li><b>PlaySequentially:</b> Whether or not to play all the montages in a sequential order. If not then any number of montages are selected and played for some time. When one sequence is complete, then another sequence  from AnimationMontages array is searched and selected for playing if available.</li></ul>"
                             ]
                         },
@@ -1507,10 +1527,6 @@
                                 "<li>If they are located on different splinePaths, then add a BP_ChangeSplinePath at the same location as Teleporter_Destination. In the properties, set AutoActivateOnOverlap to true.</li>",
                                 "</ul>"
                             ]
-                        },
-                        {
-                            "type": "note",
-                            "value": "Currently, the gameMode manages widget screens through HUD class. Therefore switching between levels will always open main menu. I will try to split the functionalities in the next update so switch between the levels is seamless."
                         }
                     ]
                 },
@@ -1655,6 +1671,8 @@
                                 "<li><b>FallOff:</b> How much damage the actors receive based on their distance to the explosion.</li>",
                                 "<li><b>DestroyDelay:</b> Once hit, then how much time to wait before finally exploding.</li>",
                                 "<li><b>ActivationDelay:</b> A small delay required for barrels and other destructible explosives because when the scene starts, the actor drops on ground. This fires the OnHitEvent and makes the actor explode.</li>",
+                                "<li><b>RandomRotation:</b> Whether the not the throwable mesh should rotate randomly, useful if it is being thrown.</li>",
+                                "<li><b>RotationRate:</b> The rate of rotation, usually between 300 to 800.</li>",
                                 "<li><b>ImpactSound:</b> The sound to play during explosion.</li>",
                                 "<li><b>ImpactSystem:</b> The NiagaraFx to spawn for explosion.</li>",
                                 "<li><b>FieldImpulse:</b> If a physics impulse is spawned, then the strength of the impulse.</li>",
@@ -1662,6 +1680,9 @@
                                 "<li><b>ImpactVolumeMultiplier:</b> The volume of the impact sound.</li>",
                                 "<li><b>InnerShakeRadius:</b> The inner shake radius for camera shake.</li>",
                                 "<li><b>OuterShakeRadius:</b> The outer shake radius for camera shake.</li>",
+                                "<li><b>UseSphereCollision:</b> Decides if a sphere collider is used for overlap based triggers.</li>",
+                                "<li><b>SphereRadius:</b> Radius of the sphere collider.</li>",
+                                "<li><b>ExplodeOnBeginOverlap:</b> If true, the explosive will explode when beginning overlap, else ending overlap if not exploded through onHit event already. Useful for mines</li>",
                                 "</ul>"
                             ]
                         },
@@ -1673,8 +1694,9 @@
                             "type": "text",
                             "value": [
                                 "<ul>",
-                                "<li><b>ANS_ThrowMethod:</b> Add this in you grenade throw animations. During the window of this notify, the character slow down time a little to allow the player to aim the throw. The grenade is thrown once either player completes the throw input or the notify duration is complete.</li>",
-                                "<li>The throw animation must be in <i>Partials.UpperBody</i> slot so the player can aim & throw when doing anything unless blocked otherwise.</li>",
+                                "<li><b>ANS_ThrowMethod:</b> Add this in you grenade throw animations. During the window of this notify, the character slow down time a little to allow the player to aim the throw. The grenade is thrown once the notify duration is complete.</li>",
+                                "<li>The throw animation must be in <i>Default.UpperBody</i> slot so the player can aim & throw when doing anything unless blocked otherwise.</li>",
+                                "<li>Some animations might require extra handling such as disabling and enabling LeftHandIK at the start and end of throw animation respectively.</li>",
                                 "</ul>"
                             ]
                         },
@@ -1700,6 +1722,7 @@
                                 "<li><b>Max & Min ThrowRange:</b> Determines the extent of throw on either side of the player. The grenade can be thrown horizontally in both directions (-1 to 1) and vertically in only top direction (0 to 1).</li>",
                                 "<li><b>DelayBeforeThrowingAgain:</b> Determines the throw rate. Player cannot throw anything again until the cooldown is complete.</li>",
                                 "<li><b>DefaultThrowAnim:</b> The default item throw montage to use for the character. When any weapon is equipped, the respective weapon's DA determines the montage to play. Make sure to add <i>ANS_ThrowMethod</i> in the montage.</li>",
+                                "<li><b>EffectType:</b> Determines the smoothness of the projectile path predictor- <i>Snappy, Smooth, Smoother</i>.</li>",
                                 "<li><b>Mesh:</b> Assign the static mesh that is used for aiming.</li>",
                                 "<li><b>Material:</b> Assign the material for the static mesh that is used for aiming.</li>",
                                 "<li><b>TracesCount:</b> Number of static meshes to spawn (ISM) for showing aiming trajectory.</li>",
@@ -1730,6 +1753,10 @@
                                 "<li>These can be used to denote any status effect using corresponding material overlay on the player character skeleton such as poison, electrical, fire, cold, etc;</li>",
                                 "</ul>"
                             ]
+                        },
+                                                {
+                            "type": "note",
+                            "value": "If the character is holding a static mesh type weapon, then WeaponStatusFX is not visible. WeaponStatusFX is visible on skeletal mesh type weapons only."
                         }
                     ]
                 },
@@ -1811,6 +1838,10 @@
                                 "<li><b>LogWeaponData:</b> When equipping new weapons, the entire list of weapons in all categories is printed on screen.</li>",
                                 "</ul>"
                             ]
+                        },
+                        {
+                            "type":"note",
+                            "value":"HitReaction system is susceptible to changes in later versions."
                         }
                     ],
                     "subsections": [
@@ -1897,6 +1928,9 @@
                                         "<li><b>IsTwoHandedWeapon:</b> Determines if or not LeftHandIK Socket should be used.</li>",
                                         "<li><b>LeftHandIKSocket:</b> The socket present in the skeletal mesh of the weapon where the left hand should be attached.</li>",
                                         "<li><b>CanAim:</b> Decides whether or not to rotate the hands with the aim direction.</li>",
+                                        "<li><b>SprintAiming:</b> Decides whether or not the character can aim while sprinting. False recommended.</li>",
+                                        "<li><b>SlideAiming:</b> Decides whether or not the character aim while sliding.</li>",
+                                        "<li><b>CanCrouch:</b> Decides whether or not the character can crouch while holding this weapon. Not that this also disables sliding for Mover Characters if false.</li>",
                                         "<li><b>AimStabilisationRate:</b> The speed with which the player's hand reset to idle position when aiming state is left.</li>",
                                         "<li><b>Min and Max AimingPitch:</b> The range within which the player can aim with this weapon.</li>",
                                         "<li><b>Weapon_Fire&ReloadMontages:</b> The montages based on the respective weapon skeletal mesh that are played during required action.</li>",
@@ -1905,6 +1939,7 @@
                                         "<li><b>EquipMontage&Sound:</b> Used for equipping weapons. If unset, then the weapons are attached directly to specified sockets. It must be set to <i>Partial</i> slot to play it on UpperBody only. The sound, if set to valid asset, also plays.</li>",
                                         "<li><b>UnequipMontage&Sound:</b> To be used similarly as EquipMontage&Sound. <i> It remains unused though. </i></li>",
                                         "<li><b>Idle & CrouchIdleAnimSeq:</b> These are used for idling poses and blending into other actions. The blending might not be perfect and you may need to change weights according to your requirements in the animation blueprints.</li>",
+                                        "<li><b>Sprint Pose AnimSeq:</b> This a sprint anim overlay added if the character is sprinting and SprintAiming is false.</li>",
                                         "<li><b>ProjectileThrowAnim:</b> The montage to play for throwing grenades when this weapon is equipped. It must be set to <i>Partial</i> slot to play it on UpperBody only.</li>",
                                         "<li><b>PlayAnimOnLeftHand:</b> Determines whether or not the idle animation blending occurs on left hand or not.</li>",
                                         "<li><b>BulletShellOffs:</b> Can be useful for offsetting the bullet shells spawn positions.</li>",
@@ -2001,8 +2036,7 @@
                                         "<ul>",
                                         "<li><b>ImpactHitFX:</b> A map of ExplosionSize to VFX and SFX for simple hit effects.</li>",
                                         "<li><b>ExplosionHitFX:</b> A map of ExplosionSize to VFX and SFX for explosive hit effects.</li>",
-                                        "<li><b>ImpulseData:</b> A map of ExplosionSize to FieldImpulseData hit effects.<ul>",
-                                        "<li><b>FirePhysicsImpulse:</b> Whether or not a physics impulse is spawned in the game.</li>",
+                                        "<li><b>ImpulseData:</b> A map of ExplosionSize to FieldImpulseData hit effects. Whether to spawn it or not depends on the bullets configuration.<ul>",
                                         "<li><b>FieldImpulseStrength:</b> Strength of the physics impulse if spawned.</li>",
                                         "<li><b>FieldImpulseRadius:</b> Radius of the physics impulse if spawned.</ul></li>",
                                         "</ul>"
@@ -2065,6 +2099,7 @@
                                         "<li>Play the game, equip the weapon and then press Shift+F1.</li>",
                                         "<li>Now you will be able to go to contentBrowser, open your weapon mesh, select your required socket.</li>",
                                         "<li>Try changing the positions in the mesh viewport and the character's hand will reposition itself in real time.</li>",
+                                        "<li>When done, save the weapon mesh, return to editor and continue gameplay.</li>",
                                         "</ul>"
                                     ]
                                 }
@@ -2073,6 +2108,15 @@
                         {
                             "title": "Projectiles",
                             "content": [
+                                {
+                                    "type": "tip",
+                                    "value": [
+                                        "<ul>",
+                                        "<li>All the required properties for below actors can be directly modified in weapon data assets.</li>",
+                                        "<li>Extended description with few other details are present below incase you wish to expand upon this system.</li>",
+                                        "</ul>"
+                                    ]
+                                },
                                 {
                                     "type": "header",
                                     "value": "Weapon Projectiles"
@@ -2106,7 +2150,7 @@
                                 {
                                     "type": "text",
                                     "value": [
-                                        "Based on spawned if the weapon is of Impact type.",
+                                        "Spawned if the weapon is of Impact type.",
                                         "<ul>",
                                         "<li><b>DestroyDelay:</b> A simple delay before destroying the projectile actor. Helpful if the collider is bigger than the bullet mesh.</li>",
                                         "<li><b>Range:</b> Taken from Weapon DA, it can be left at 0.</li>",
@@ -2127,7 +2171,7 @@
                                 {
                                     "type": "text",
                                     "value": [
-                                        "Based on spawned if the weapon is of Explosion type.",
+                                        "Spawned if the weapon is of Explosion type.",
                                         "<ul>",
                                         "<li><b>DestroyDelay:</b> A simple delay before destroying the projectile actor. Helpful if the collider is bigger than the bullet mesh or there is a trail that should dissolve.</li>",
                                         "<li><b>Range:</b> Taken from Weapon DA, it can be left at 0.</li>",
@@ -2149,7 +2193,7 @@
                                 {
                                     "type": "text",
                                     "value": [
-                                        "Based on spawned if the weapon is of Ping type.",
+                                        "Spawned if the weapon is of Ping type. Ping weapon bullets spawn a custom VFX on the hit location, instead of spawning any impact effects.",
                                         "<ul>",
                                         "<li><b>DestroyDelay:</b> A simple delay before destroying the projectile actor. Helpful if the collider is bigger than the bullet mesh.</li>",
                                         "<li><b>Range:</b> Taken from Weapon DA, it can be left at 0.</li>",
@@ -2163,7 +2207,24 @@
                                     "align": "full"
                                 }
                             ]
+                        },
+                        {
+                    "title": "Dealing Damage",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li>For dealing damage, use <i>ObjectHitWithRangedWeapon</i> and <i>ObjectHitWithMeleeWeapon</i> interface functions.</li>",
+                                "<li>Implement interface <i>BPI_ObjectHit</i> in your objects that you want to get hit.</li>",
+                                "<li>If your objects have a physics material assigned, then ranged weapon hit effects are already applicable based on ranged weapon type and impact size.</li>",
+                                "<li>You will need to implement melee weapon hit effects yourself.</li>",
+                                "<li>A more refined approach will be implemented in next version.</li>",
+                                "</ul>"
+                            ]
                         }
+                    ]
+                }
                     ]
                 }
             ]
@@ -2266,6 +2327,52 @@
                             "type": "text",
                             "value": "<b>Q: Does this project use a custom motion matching system?</b><br><b>A:</b> No. This project uses the default motion matching setup and animations from the <i>GameAnimationSampleProject (GASP)</i>. No custom motion matching setup was created specifically for this template."
                         }
+                    ]
+                },
+                {
+                    "title": "Launching Mover Characters",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": "<b>Q: How to launch mover characters in air?</b><br><b>A:</b> Mover characters do not experience physics impulses the same way CMC characters do. A simple launch simulating method makes the Mover character jump as high as the intensity of the physics impulse. Simply use the interface function <i>LaunchCharacterOffGround</i> with Mover pawn as target."
+                        }
+                    ]
+                },
+                {
+                    "title": "Speeding up Throwable Projectiles Movement",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": [
+                                "<b>Q: How to speed up the movement speed of throwable projectiles such as grenades?</b><br><b>A:</b> There is no way to speed up the movement speed of the throwables.",
+                                "<ul>",
+                                "<li>One tip is to keep the vertical distance of the projectile lower and horizontal distance higher.</li>",
+                                "<li>Another thing is that if the grenade is past its activation timer, then it will explode even if it hit anything while on the way, instead of waiting to land on the ground.</li>",
+                                "</ul>"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "title": "Ignoring Any Component in Look Ahead Trace",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": [
+                                "<b>Q: How to ignore any component - static mesh, skeletal mesh, collision volume, widget element, etc; from blocking LookAheadTrace?</b><br><b>A:</b> To stop any component from blocking the LookAheadTrace, follow these steps -.",
+                                "<ul>",
+                                "<li>Set <i>CollisionEnabled</i> to NoCollision.</li>",
+                                "<li>Set <i>ObjectType</i> to Destructible.</li>",
+                                "<li>Set <i>Ignore</i> as the collision response to all channels.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                    "type": "image",
+                    "src": "https://cdnb.artstation.com/p/assets/images/images/100/046/117/large/wraithcg-screenshot-2026-06-16-074607.jpg?1781709680",
+                    "caption": "Component Collision Settings",
+                    "align": "full"
+                }
                     ]
                 }
             ]

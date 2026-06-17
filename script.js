@@ -420,34 +420,85 @@ document.addEventListener('DOMContentLoaded', () => {
         return content;
     }
 
-    // View Switching & Utils
+    // // View Switching & Utils
+    // function showDocsInterface() { 
+    //     landingView.classList.add('hidden'); 
+    //     docsView.classList.remove('hidden'); 
+    //     document.body.style.overflowY = 'hidden'; // Lock body scroll inside docs
+    //     window.scrollTo(0, 0); // Scroll to top when opening docs
+    // }
+    
+    // function showLandingPage() { 
+    //     docsView.classList.add('hidden'); 
+    //     landingView.classList.remove('hidden'); 
+    //     if(projectSelector) projectSelector.value = ""; 
+    //     document.body.style.overflowY = 'auto'; // Restore body scroll on front page
+    //     window.scrollTo(0, 0); // Scroll to top when returning to home
+    // }
+    
+    // function openLightbox(src) { 
+    //     if(lightboxImg) lightboxImg.src = src; 
+    //     if(lightbox) lightbox.classList.add('active'); 
+    //     document.body.style.overflowY = 'hidden'; // Lock scroll when viewing images
+    // }
+    
+    // function closeLightbox() { 
+    //     if(lightbox) lightbox.classList.remove('active'); 
+    //     setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); 
+    //     // Restore to auto ONLY if we are back on the landing page
+    //     document.body.style.overflowY = docsView.classList.contains('hidden') ? 'auto' : 'hidden'; 
+    // }
+
+// =========================================================================
+    // 6. VIEW SWITCHING & UTILS (Updated with Screen Check)
+    // =========================================================================
+    
+    // Helper to check if the device is desktop size (based on your 968px CSS breakpoint)
+    const isDesktop = () => window.innerWidth > 968;
+
     function showDocsInterface() { 
         landingView.classList.add('hidden'); 
         docsView.classList.remove('hidden'); 
-        document.body.style.overflowY = 'hidden'; // Lock body scroll inside docs
-        window.scrollTo(0, 0); // Scroll to top when opening docs
+        
+        // Only lock body scroll if the device is desktop
+        document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto'; 
+        
+        window.scrollTo(0, 0); 
     }
     
     function showLandingPage() { 
         docsView.classList.add('hidden'); 
         landingView.classList.remove('hidden'); 
         if(projectSelector) projectSelector.value = ""; 
-        document.body.style.overflowY = 'auto'; // Restore body scroll on front page
-        window.scrollTo(0, 0); // Scroll to top when returning to home
+        
+        // Always restore body scroll on the landing page
+        document.body.style.overflowY = 'auto'; 
+        window.scrollTo(0, 0); 
     }
     
     function openLightbox(src) { 
         if(lightboxImg) lightboxImg.src = src; 
         if(lightbox) lightbox.classList.add('active'); 
-        document.body.style.overflowY = 'hidden'; // Lock scroll when viewing images
+        
+        // Only lock body scroll if the device is desktop
+        document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto'; 
     }
     
     function closeLightbox() { 
         if(lightbox) lightbox.classList.remove('active'); 
         setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); 
-        // Restore to auto ONLY if we are back on the landing page
-        document.body.style.overflowY = docsView.classList.contains('hidden') ? 'auto' : 'hidden'; 
+        
+        // Re-apply the lock ONLY if we are back in the docs view AND on a desktop
+        document.body.style.overflowY = (docsView.classList.contains('hidden') || !isDesktop()) ? 'auto' : 'hidden'; 
     }
+
+    // Ensure scroll lock updates correctly if the user rotates their phone or resizes the browser
+    window.addEventListener('resize', () => {
+        // Only update if we are inside the docs and NOT viewing an image popup
+        if (!docsView.classList.contains('hidden') && !lightbox.classList.contains('active')) {
+            document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto';
+        }
+    });
 
 });
 

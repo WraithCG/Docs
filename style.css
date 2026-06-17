@@ -425,6 +425,7 @@ img.loaded { opacity: 1; filter: blur(0); }
 }
 
 @media screen and (max-width: 968px) {
+
     /* Base Resets for mobile scaling */
     .docs-wrapper { height: auto; min-height: 100vh; overflow: visible; }
     .main-grid { grid-template-columns: 1fr; height: auto; overflow: visible; padding: 1rem; }
@@ -477,4 +478,3 @@ body.font-classic {
     --font-primary: 'Playfair Display', serif;
     --font-secondary: 'Playfair Display', serif;
 }
-/* The default relies on the base variables declared in :root */
