@@ -56,6 +56,20 @@
                     "value": "Track the progress as the project upgrades. <ul><li>Green items are live,</li><li>Blue are currently being worked on</li><li>and Yellow are planned for future releases.</li></ul>"
                 },
                 {
+                    "type":"note",
+                    "value":[
+                        "<ul>",
+                        "<li>All my listings on Fab are LOCKED until the end of July 2026. As a result, I cannot put Version 1.1 up on Fab.</li>",
+                        "<li>If you wish to get this project-",
+                        "<ul>",
+                        "<li>Get the project from <a href=\"https://fab.com/s/1e5841e0beb8\">Fab Marketplace</a>.</li>",
+                        "<li>Once bought, DM your Order ID on discord or send an email.</li>",
+                        "<li>I'll get it verified and provide a google drive link for accessing the project.</li></ul></li>",
+                        "<li>I sincerely apologize for the delay in updating the project and inconvenience in accessing it :)</li>",
+                        "</ul>"
+                    ]
+                },
+                {
                     "type": "roadmap",
                     "milestones": [
                         {
@@ -78,9 +92,10 @@
                         },
                         {
                             "version": "Version 1.1",
-                            "date": "TBA",
-                            "status": "planned",
+                            "date": "June 2026",
+                            "status": "Completed",
                             "features": [
+                                "<b>This Version will not be available on FAB until end of July</b>.",
                                 "Enhanced Interactables",
                                 "Customisation Save",
                                 "Mover Component Support",
@@ -97,8 +112,8 @@
                         },
                         {
                             "version": "Version 1.2",
-                            "date": "Mid-July 2026",
-                            "status": "planned",
+                            "date": "TBA",
+                            "status": "in-progress",
                             "features": [
                                 "Async Asset Loading Wherever Possible",
                                 "Item Inspection System",
@@ -162,7 +177,13 @@
                 },
                 {
                     "type": "text",
-                    "value": "<ul><li><b>Limited Save Data:</b> The project uses BP_SideScrollerGameInstanceClass for saving <i>Per-Character Customisation Data</i> and <i>Current Character Class</i>. This data is saved between levels or game replays during any single play.</li></ul>"
+                    "value": [
+                        "<b>Limited Save Data:</b>",
+                        "<ul>",
+                        "<li>The project uses BP_SideScrollerGameInstanceClass for saving game data between levels or game replays during any single play.",
+                        "<li>Only<i>Per-Character Customisation Data</i>, <i>Current Character Class Index</i> and <i>Weapons Equipped by the Character</i> are saved.</li>",
+                        "</ul>"
+                    ]
                 },
                 {
                     "type": "header",
@@ -321,7 +342,7 @@
                             "value": [
                                 "<ul>",
                                 "<li>The main character class are present in respective movement system's base folder.</li>",
-                                "<li>The pawn classes that are open to modification are those inside respective movement system's folder - <i>CBP_SideScroller_NewUEFN_CMC/Mover</i>.</li>",
+                                "<li>The pawn classes that are open to modification are those inside respective movement system's folder - <i>CBP_SideScroller_PlayerBase_CMC/Mover</i>.</li>",
                                 "</ul>"
                             ]
                         },
@@ -329,13 +350,13 @@
                             "type": "image",
                             "src": "https://cdnb.artstation.com/p/assets/images/images/099/638/065/large/wraithcg-screenshot-2026-06-03-155727.jpg?1780527712",
                             "align": "left",
-                            "caption": "CBP_SideScroller_NewUEFN_Mover"
+                            "caption": "CBP_SideScroller_NewUEFN_Mover -> CBP_SideScroller_PlayerBase_Mover"
                         },
                         {
                             "type": "image",
                             "src": "https://cdnb.artstation.com/p/assets/images/images/099/638/061/large/wraithcg-screenshot-2026-06-03-155720.jpg?1780527709",
                             "align": "right",
-                            "caption": "CBP_SideScroller_NewUEFN_CMC"
+                            "caption": "CBP_SideScroller_NewUEFN_CMC -> CBP_SideScroller_PlayerBase_CMC"
                         },
                         {
                             "type": "header",
@@ -363,7 +384,7 @@
                                     "type": "image",
                                     "src": "https://cdnb.artstation.com/p/assets/images/images/099/638/065/large/wraithcg-screenshot-2026-06-03-155727.jpg?1780527712",
                                     "align": "full",
-                                    "caption": "CBP_SideScroller_NewUEFN_CMC/Mover"
+                                    "caption": "CBP_SideScroller_NewUEFN_CMC/Mover -> CBP_SideScroller_PlayerBase_Mover/CMC"
                                 },
                                 {
                                     "type": "text",
@@ -516,11 +537,26 @@
                             "value": [
                                 "<ul>",
                                 "<li>Create a data asset of type <b>PDA_GameModeData</b>.</li>",
-                                "<li>Make sure the <i>PrimaryPawnClass</i> is set to your desired pawn - either Mover_NewUEFN or CMC_NewUEFN.</li>",
-                                "<li>The <i>CharacterSelectionData</i> is set to retargeted characters that use the same movement component as <i>PrimaryPawnClass</i>.</li>",
-                                "<li>The <i>CircularCharacterSelectionList</i> whether or not the character selection system will be cyclic.</li>",
-                                "<li>The <i>CameraRotationSpeed</i> is the speed with which the camera turns at any point on the spline path - corners basically. 0 is instant.</li>",
                                 "<li>Then create a child class of type <b>GM_SideScrollerBase</b> and assign your game mode data asset. Other classes must be as shown in image above.</li>",
+                                "</ul>"
+                            ]
+                        },
+                        {
+                            "type": "header",
+                            "value": "Properties"
+                        },
+                        {
+                            "type": "text",
+                            "value": [
+                                "<ul>",
+                                "<li><b>PrimaryPawnClass:</b> Set it to your desired pawn - either Mover_PlayerBase or CMC_PlayerBase.</li>",
+                                "<li><b>CharacterSelectionData:</b> Set it to retargeted characters that use the same movement component as <i>PrimaryPawnClass</i>.</li>",
+                                "<li><b>CircularCharacterSelectionList:</b> Decides whether or not the character selection system will be cyclic.</li>",
+                                "<li><b>CameraRotationSpeed:</b> The speed with which the camera turns at any point on the spline path - corners basically. 0 is instant.</li>",
+                                "<li><b>isMovementAware:</b> Decides whether or not camera shifts left/right with player movement.</li>",
+                                "<li><b>DynamicCamera:</b> Allows the player to change between Near, Far and Balanced Camera presets.</li>",
+                                "<li><b>DefaultCameraStyle:</b> If dynamic camera is set to false, then this dictates the default camera preset to use.</li>",
+                                "<li><b>DefaultCameraShift:</b> If the movement aware shifting is set to false, then this dictates where camera rests with respect to player.</li>",
                                 "</ul>"
                             ]
                         }
@@ -1016,7 +1052,7 @@
                         },
                         {
                             "type": "text",
-                            "value": "The character data is fetched frome <b>_DA_PDA_CharacterSelectionData_CMC/Mover</b>. It is recommended that all characters must inherit from <b>CBP_SideScroller_NewUEFN_CMC/Mover</b> character to preserve running logic and expected features."
+                            "value": "The character data is fetched frome <b>_DA_PDA_CharacterSelectionData_CMC/Mover</b>. It is recommended that all characters must inherit from <b>CBP_SideScroller_PlayerBase_CMC/Mover</b> character to preserve running logic and expected features."
                         },
                         {
                             "type": "header",
@@ -1145,9 +1181,7 @@
                                 "<li>Open the data asset and click on the trash icon to empty the AttachmentData.</li>",
                                 "<li>Click the plus icon to add a new element in the map.</li>",
                                 "<li>The default value will be none. Click on it and select your desired category - Face, Torso, Legs or Shoes.</li>",
-                                "<li>Expand the section and click on plus icon to add items in that category.</li>",
-                                "<li>Always keep the first item in any category empty. This indicates the no attachments state for the character during the customization process.</li>",
-                                "<li>In the next item, fill the appropriate data -",
+                                "<li>Expand the section and click on plus icon to add items in that category and fill appropriate data.</li>",
                                 "<ul>",
                                 "<li><b>isSkeletalMesh: </b> Determines if or not the item to be attached to the character is a skeletal mesh or a static mesh.</li>",
                                 "<li><b>SkeletalMesh: </b> If this item is a skeletal mesh, i.e. <i>isSkeletalMesh</i> is set to true, then select your desired mesh.</li>",
@@ -1462,13 +1496,13 @@
                                         "<li><b>Dialogue Montages:</b> Played on NPC when the player interacts. Eveytime the player selects any dialogue, a new random montage from the dialogue montages is played.</li>",
                                         "<li><b>Interaction Data:</b> An array of interaction data. It is executed based on the choosen dialogue option, always starting from index 0.",
                                         "<ul>",
-                                        "<li><b>InteractionTet:</b> This text represents dialogue of the NPC. <i>ActorName</i> is automatically appended at the end of the <i>InteractionTet</i>.</li>",
+                                        "<li><b>InteractionText:</b> This text represents dialogue of the NPC. <i>ActorName</i> is automatically appended at the end of the <i>InteractionTet</i>.</li>",
                                         "<li><b>AutoHide:</b> If true, then no options are displayed. Based on <i>AutoHideTimer</i> duration, the interaction is stopped automatically.</li>",
-                                        "<li><b>OptionButterTet1:</b> Atleast one option is always available. And atmost there can be 2 options only.</li>",
+                                        "<li><b>OptionButtonText1:</b> Atleast one option is always available. And atmost there can be 2 options only.</li>",
                                         "<li><b>EndOnOption1:</b> If true, then the interaction is stopped when the player chooses Otion 1.</li>",
                                         "<li><b>ReplyDataForOption1:</b> Enter the index of the interaction data in this array, which presents the dialogue and choice based on Option 1. Required if <i>EndOnOption1</i> is false.</li>",
                                         "<li><b>Has2ndOption:</b> Whether or not to draw button for 2nd Option.</li>",
-                                        "<li><b>OptionButtonTet2</b>, <b>EndOnOption2</b> and <b>ReplyDataForOption2:</b> These serve same functions as Option 1.</li>",
+                                        "<li><b>OptionButtonText2</b>, <b>EndOnOption2</b> and <b>ReplyDataForOption2:</b> These serve same functions as Option 1.</li>",
                                         "</ul></li>",
                                         "</ul>"
                                     ]
@@ -1795,7 +1829,7 @@
                                 "<li>If your player blueprint uses single skeletal mesh, then skip the steps given below. Simply add new characters as explained in <i>Character Selection System</i>.</li>",
                                 "<li>If your player blueprint uses more than one skeletal mesh, for example, a metahuman character has separate skeletal meshes for various body parts, and you wish that they should be highlighted when any status effect is active, then -",
                                 "<ul>",
-                                "<li>Open your player blueprint. Make sure it is a child class of either <i>CBP_SideScroller_NewUEFN_Mover</i> or <i>CBP_SideScroller_NewUEFN_CMC</i>.</li>",
+                                "<li>Open your player blueprint. Make sure it is a child class of either <i>CBP_SideScroller_PlayerBase_Mover</i> or <i>CBP_SideScroller_PlayerBase_CMC</i>.</li>",
                                 "<li>In the <i>MyBlueprint</i> tab, go to <i>Interfaces</i> section and find <b>GetStatusMesh</b> function.</li>",
                                 "<li>Double-click on it to override its implementation.</li>",
                                 "<li>Right-click on the function node and select <i>AddCallToParentFunction</i>.</li>",
@@ -1923,7 +1957,6 @@
                                     "type": "text",
                                     "value": [
                                         "<ul>",
-                                        "<li><b>MeshType:</b> Determines which type of mesh will be attached to player socket. Mostly melee weapons do not have a animation of their own, so static meshes are used. But you can used skeletal mesh too. None type is for <i>Unarmed Combat Data Asset</i>.</li>",
                                         "<li><b>MeleeAttackData:</b> Data Asset of type <i>PDA_CombatActionData</i>.</li>",
                                         "<li><b>EndOffset:</b> Offset the trace end location from player.</li>",
                                         "<li><b>ForwardOffset:</b> Offset the trace start location from player.</li>",
@@ -1935,6 +1968,7 @@
                                         "<li><b>HolsterSocket:</b> The socket in player skeleton where the weapons not currently in use but present in inventory are stored.</li>",
                                         "<li><b>StaticMesh:</b> The static mesh for the weapon used in weapon interactables and dropped weapon actors.</li>",
                                         "<li><b>SkeletalMesh:</b> The weapon skeletal mesh to attach to the player skeleton.</li>",
+                                        "<li><b>OtherAttachments:</b> These serve as extra attachments to player character, for e.g. A sword with shield, a gun with tactial helmet/vest, or twin swords. Static meshes appear when the weapon is holstered while skeletal meshes are used when weapon is equipped. Socket Names are for attachment purposes.</li>",
                                         "<li><b>ShowMouseCursor:</b> When ranged weapons are equipped, mouse cursor visibility is helpful in aiming.</li>",
                                         "<li><b>IsTwoHandedWeapon:</b> Determines if or not LeftHandIK Socket should be used.</li>",
                                         "<li><b>LeftHandIKSocket:</b> The socket present in the skeletal mesh of the weapon where the left hand should be attached.</li>",
@@ -1982,6 +2016,7 @@
                                         "<li><b>StaticMesh:</b> The static mesh for the weapon used in weapon interactables and dropped weapon actors.</li>",
                                         "<li><b>SkeletalMesh:</b> The weapon skeletal mesh to attach to the player skeleton.</li>",
                                         "<li><b>ShowMouseCursor:</b> When ranged weapons are equipped, mouse cursor visibility is helpful in aiming.</li>",
+                                        "<li><b>OtherAttachments:</b> These serve as extra attachments to player character, for e.g. A sword with shield, a gun with tactial helmet/vest, or twin swords. Static meshes appear when the weapon is holstered while skeletal meshes are used when weapon is equipped. Socket Names are for attachment purposes.</li>",
                                         "<li><b>IsTwoHandedWeapon:</b> Determines if or not LeftHandIK Socket should be used.</li>",
                                         "<li><b>LeftHandIKSocket:</b> The socket present in the skeletal mesh of the weapon where the left hand should be attached.</li>",
                                         "<li><b>CanAim:</b> Decides whether or not to rotate the hands with the aim direction.</li>",
