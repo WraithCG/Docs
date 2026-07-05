@@ -1,569 +1,169 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =========================================================================
-    // 1. GLOBAL VARIABLES
-    // =========================================================================
-    const landingView = document.getElementById('landing-view');
-    const docsView = document.getElementById('docs-view');
-    const projectGrid = document.getElementById('project-grid');
-    const projectSelector = document.getElementById('project-selector');
-    const sidebarList = document.getElementById('section-list');
-    const mainContent = document.getElementById('main-content');
-    const searchInput = document.getElementById('search-input');
-    const homeBtn = document.getElementById('home-btn');
+    // ==========================================
+    // SIDEBAR TOGGLE LOGIC (Mobile)
+    // ==========================================
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileSidebar = document.getElementById('mobile-sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const closeSidebarBtn = document.getElementById('close-sidebar');
+
+    function toggleSidebar() {
+        mobileSidebar.classList.toggle('open');
+        sidebarOverlay.classList.toggle('active');
+    }
+
+    if(mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleSidebar);
+    if(closeSidebarBtn) closeSidebarBtn.addEventListener('click', toggleSidebar);
+    if(sidebarOverlay) sidebarOverlay.addEventListener('click', toggleSidebar);
+
+
+    // ==========================================
+    // THEME SWITCHING LOGIC (With LocalStorage)
+    // ==========================================
     const themeBtn = document.getElementById('theme-btn');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxClose = document.getElementById('lightbox-close');
-    const fontBtn = document.getElementById('font-btn');
-
-    let allProjectsIndex = [];
-    let currentProjectData = null;
-    let flatNavigationList = []; 
-
-    // =========================================================================
-    // 2. INITIALIZATION & LISTENERS
-    // =========================================================================
-    initStarfield();
-    applyRandomTheme();
-    fetchProjectIndex();
-
-    if(homeBtn) homeBtn.addEventListener('click', showLandingPage);
-    if(projectSelector) projectSelector.addEventListener('change', (e) => loadProjectDocumentation(e.target.value));
-    if(themeBtn) themeBtn.addEventListener('click', () => { cycleTheme(); initStarfield(); });
-    if(fontBtn) fontBtn.addEventListener('click', cycleFont);
+    const themeBtnMobile = document.getElementById('theme-btn-mobile');
+    const tooltipDesktop = document.getElementById('theme-tooltip');
+    const tooltipMobile = document.getElementById('theme-tooltip-mobile');
     
-    // Search Listener
-    if(searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            // If empty, restore tree. If query, flatten results.
-            if(!query) initSidebar(currentProjectData.sections); 
-            else filterSidebar(query);
-        });
-    }
-
-    if(lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-    if(lightbox) lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) closeLightbox(); });
-
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.onload = () => { img.classList.remove('lazy'); img.classList.add('loaded'); img.removeAttribute('min-height'); };
-                observer.unobserve(img);
-            }
-        });
-    }, { rootMargin: "200px" });
-
-    // =========================================================================
-    // 3. CORE LOGIC
-    // =========================================================================
-
-    function fetchProjectIndex() {
-        fetch('data.json').then(res => res.json()).then(projects => {
-            allProjectsIndex = projects;
-            renderLandingPage(projects);
-            populateDropdown(projects);
-        }).catch(err => {
-            console.error("Error loading data.json:", err);
-            projectGrid.innerHTML = '<p style="color:white;text-align:center;">Error loading data.json</p>';
-        });
-    }
-
-    function renderLandingPage(projects) {
-        projectGrid.innerHTML = '';
-        projects.forEach(proj => {
-            const card = document.createElement('div');
-            card.className = 'project-card';
-            card.innerHTML = `
-                <img src="${proj.image}" class="card-image" alt="${proj.title}">
-                <div class="card-content">
-                    <h3>${proj.title}</h3>
-                    <p>${proj.description}</p>
-                </div>`;
-            card.addEventListener('click', () => loadProjectDocumentation(proj.path));
-            projectGrid.appendChild(card);
-        });
-    }
-
-    function populateDropdown(projects) {
-        projectSelector.innerHTML = '<option value="" disabled selected>Switch Project...</option>';
-        projects.forEach(proj => {
-            const option = document.createElement('option');
-            option.value = proj.path;
-            option.textContent = proj.title;
-            projectSelector.appendChild(option);
-        });
-    }
-
-    // RECURSIVE FLATTENER (Builds reading order: Parent -> Child -> Next Parent)
-    function buildLinearList(sections, list = []) {
-        sections.forEach(section => {
-            if (!section._uuid) section._uuid = Math.random().toString(36).substr(2, 9);
-            list.push(section);
-            if (section.subsections && section.subsections.length > 0) {
-                buildLinearList(section.subsections, list);
-            }
-        });
-        return list;
-    }
-
-    function loadProjectDocumentation(jsonPath) {
-        mainContent.innerHTML = '<div class="placeholder"><p>Loading...</p></div>';
-        if(projectSelector) projectSelector.value = jsonPath;
-
-        fetch(jsonPath)
-            .then(res => res.json())
-            .then(projectData => {
-                currentProjectData = projectData;
-                flatNavigationList = buildLinearList(projectData.sections); // Prepare Nav
-                showDocsInterface();
-                initSidebar(projectData.sections);
-                if(searchInput) searchInput.value = ''; 
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                mainContent.innerHTML = `<div class="placeholder"><p>Error loading ${jsonPath}</p></div>`;
-            });
-    }
-
-    // =========================================================================
-    // 4. RECURSIVE SIDEBAR LOGIC
-    // =========================================================================
-
-    function initSidebar(sectionsToRender) {
-        sidebarList.innerHTML = ''; 
-        if(!sectionsToRender || sectionsToRender.length === 0) {
-            sidebarList.innerHTML = '<li class="no-results">No sections found</li>';
-            return;
+    const themes = [
+        { class: 'theme-dark-orange', name: 'Dark Orange' },
+        { class: 'theme-light-orange', name: 'Light Orange' },
+        { class: 'theme-dark-blue', name: 'Dark Blue' },
+        { class: 'theme-light-blue', name: 'Light Blue' },
+        { class: 'theme-cosmic', name: 'Cosmic Purple' },
+        { class: 'theme-cyberpunk', name: 'Cyberpunk' },
+        { class: 'theme-royal', name: 'Royal Gold' },
+        { class: 'theme-metal', name: 'Metal Green' },
+        { class: 'theme-hc-gold', name: 'High Contrast Gold' }
+    ];
+    
+    let currentThemeIndex = 8;
+    
+    // Load Saved Theme
+    const savedTheme = localStorage.getItem('wraithcg_theme_idx');
+    if (savedTheme !== null) {
+        currentThemeIndex = parseInt(savedTheme, 10);
+        if (currentThemeIndex >= themes.length || currentThemeIndex < 0) {
+            currentThemeIndex = 8;
         }
+    }
+    
+    // Apply theme immediately
+    document.body.className = themes[currentThemeIndex].class;
+    if(tooltipDesktop) tooltipDesktop.textContent = themes[currentThemeIndex].name;
+    if(tooltipMobile) tooltipMobile.textContent = themes[currentThemeIndex].name;
 
-        // Helper to recursively build tree items
-        const createSidebarItem = (section) => {
-            const li = document.createElement('li');
-            li.dataset.id = section._uuid;
+    // Theme Cycling Function
+    function cycleTheme() {
+        document.body.classList.remove(themes[currentThemeIndex].class);
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        const newTheme = themes[currentThemeIndex];
+        document.body.classList.add(newTheme.class);
+        
+        localStorage.setItem('wraithcg_theme_idx', currentThemeIndex);
+        
+        const triggerTooltip = (el) => {
+            if(!el) return;
+            el.textContent = newTheme.name;
+            el.classList.add('show');
+            clearTimeout(el.timeout);
+            el.timeout = setTimeout(() => el.classList.remove('show'), 1500);
+        };
+        triggerTooltip(tooltipDesktop);
+        triggerTooltip(tooltipMobile);
+    }
+    
+    if(themeBtn) themeBtn.addEventListener('click', cycleTheme);
+    if(themeBtnMobile) themeBtnMobile.addEventListener('click', cycleTheme);
 
-            // Header (Title + Arrow)
-            const header = document.createElement('div');
-            header.className = 'sidebar-item-header';
+
+    // ==========================================
+    // VIEW TOGGLE LOGIC (Grid vs List)
+    // ==========================================
+    const gridBtn = document.getElementById('view-grid-btn');
+    const listBtn = document.getElementById('view-list-btn');
+    const projectGridContainer = document.getElementById('project-grid');
+
+    // Load saved view preference
+    const savedView = localStorage.getItem('wraithcg_view_pref') || 'list';
+    if (savedView === 'list') {
+        projectGridContainer.classList.add('list-view');
+        if(listBtn) listBtn.classList.add('active');
+        if(gridBtn) gridBtn.classList.remove('active');
+    }
+
+    if(gridBtn) {
+        gridBtn.addEventListener('click', () => {
+            projectGridContainer.classList.remove('list-view');
+            gridBtn.classList.add('active');
+            listBtn.classList.remove('active');
+            localStorage.setItem('wraithcg_view_pref', 'grid');
+        });
+    }
+
+    if(listBtn) {
+        listBtn.addEventListener('click', () => {
+            projectGridContainer.classList.add('list-view');
+            listBtn.classList.add('active');
+            gridBtn.classList.remove('active');
+            localStorage.setItem('wraithcg_view_pref', 'list');
+        });
+    }
+
+    // ==========================================
+    // FETCH PROJECTS JSON & BUILD GRID
+    // ==========================================
+    fetch('projects.json')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(projects => {
+            projectGridContainer.innerHTML = ''; // Clear fallback content
             
-            const titleSpan = document.createElement('span');
-            titleSpan.textContent = section.title;
-            header.appendChild(titleSpan);
-
-            // Click Interaction
-            header.addEventListener('click', (e) => {
-                highlightSidebarItem(section._uuid);
-                renderContent(section);
-            });
-
-            // Recursive Children
-            if (section.subsections && section.subsections.length > 0) {
-                // Arrow Icon
-                const arrow = document.createElement('i');
-                arrow.className = 'bx bx-chevron-right arrow-icon';
-                header.appendChild(arrow);
-                
-                // Toggle Collapse (Stop prop so we don't trigger page load)
-                arrow.addEventListener('click', (e) => { 
-                    e.stopPropagation(); 
-                    li.classList.toggle('open'); 
-                });
-
-                // Container for children
-                const subUl = document.createElement('ul');
-                subUl.className = 'sidebar-sublist';
-
-                // Recurse
-                section.subsections.forEach(sub => {
-                    subUl.appendChild(createSidebarItem(sub));
-                });
-
-                li.appendChild(header);
-                li.appendChild(subUl);
-            } else {
-                li.appendChild(header);
-            }
-
-            return li;
-        };
-
-        // Render Roots
-        sectionsToRender.forEach(sec => {
-            sidebarList.appendChild(createSidebarItem(sec));
-        });
-
-        // Auto-load first item on fresh load
-        if ((!searchInput || !searchInput.value) && flatNavigationList.length > 0) {
-            const first = flatNavigationList[0];
-            highlightSidebarItem(first._uuid);
-            renderContent(first);
-        }
-    }
-
-    // UPDATED: Expands parents automatically
-    function highlightSidebarItem(uuid) {
-        // 1. Remove active from everyone
-        document.querySelectorAll('#section-list li, .sidebar-sublist li').forEach(el => {
-            el.classList.remove('active', 'sub-active');
-        });
-        
-        // 2. Find target
-        const target = document.querySelector(`li[data-id="${uuid}"]`);
-        if (target) {
-            target.classList.add('active');
-            // If inside a sublist, mark as sub-active
-            if (target.parentElement.classList.contains('sidebar-sublist')) {
-                target.classList.add('sub-active');
-            }
-
-            // 3. Walk up the DOM to open all parent ULs
-            let parent = target.parentElement;
-            while(parent && parent.id !== 'section-list') {
-                if(parent.classList.contains('sidebar-sublist')) {
-                    // The LI wrapping this UL needs 'open' class
-                    const parentLi = parent.parentElement;
-                    if(parentLi && parentLi.tagName === 'LI') {
-                        parentLi.classList.add('open');
-                    }
-                }
-                parent = parent.parentElement;
-            }
-
-            // 4. Scroll into view
-            setTimeout(() => {
-                target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100); // Small delay to allow CSS transitions to start opening
-        }
-    }
-
-    // Flattened Search (Non-recursive display for results)
-    function filterSidebar(query) {
-        if (!currentProjectData) return;
-        const results = [];
-        const traverse = (list, parentChain = '') => {
-            list.forEach(sec => {
-                const fullName = parentChain ? `${parentChain} > ${sec.title}` : sec.title;
-                if(matchesQuery(sec, query)) {
-                    // Create visual copy (flat)
-                    results.push({ ...sec, title: fullName, subsections: null });
-                }
-                if(sec.subsections) traverse(sec.subsections, fullName);
-            });
-        };
-        traverse(currentProjectData.sections);
-        initSidebar(results);
-    }
-
-    function matchesQuery(section, query) {
-        if (section.title.toLowerCase().includes(query)) return true;
-        return section.content.some(block => {
-            if (block.value && typeof block.value === 'string') return block.value.toLowerCase().includes(query);
-            if (block.value && Array.isArray(block.value)) return block.value.join(' ').toLowerCase().includes(query);
-            return false;
-        });
-    }
-
-    // =========================================================================
-    // 5. CONTENT RENDERING
-    // =========================================================================
-
-    function renderContent(section) {
-        mainContent.innerHTML = '';
-
-        // Title
-        const title = document.createElement('h1');
-        title.className = 'doc-title';
-        title.textContent = section.title;
-        mainContent.appendChild(title);
-
-        // Render Blocks
-        if (section.content) {
-            section.content.forEach(block => {
-                let el;
-                // Text/HTML
-                if (block.type === 'header') { el = document.createElement('h2'); el.innerHTML = block.value; } 
-                else if (block.type === 'text') { el = document.createElement('div'); el.className = 'text-block'; el.innerHTML = parseRichText(block.value); } 
-                else if (block.type === 'note') { el = document.createElement('div'); el.className = 'note-block'; el.innerHTML = `<i class='bx bx-info-circle'></i> <div>${parseRichText(block.value)}</div>`; }
-                else if (block.type === 'tip') { el = document.createElement('div'); el.className = 'tip-block'; el.innerHTML = `<i class='bx bx-bulb'></i> <div>${parseRichText(block.value)}</div>`; }
-                else if (block.type === 'code') { el = document.createElement('pre'); el.className = 'code-block'; el.textContent = Array.isArray(block.value) ? block.value.join('\n') : block.value; }
-                
-                // Tables
-                else if (block.type === 'table') {
-                    const wrap = document.createElement('div');
-                    wrap.className = 'table-wrapper';
-                    const table = document.createElement('table');
-                    table.className = 'custom-table';
-                    
-                    // Table Headers
-                    if (block.headers && block.headers.length > 0) {
-                        const thead = document.createElement('thead');
-                        const tr = document.createElement('tr');
-                        block.headers.forEach(headerText => {
-                            const th = document.createElement('th');
-                            th.innerHTML = parseRichText(headerText);
-                            tr.appendChild(th);
-                        });
-                        thead.appendChild(tr);
-                        table.appendChild(thead);
-                    }
-                    
-                    // Table Rows
-                    if (block.rows && block.rows.length > 0) {
-                        const tbody = document.createElement('tbody');
-                        block.rows.forEach(row => {
-                            const tr = document.createElement('tr');
-                            row.forEach(cellText => {
-                                const td = document.createElement('td');
-                                td.innerHTML = parseRichText(cellText);
-                                tr.appendChild(td);
-                            });
-                            tbody.appendChild(tr);
-                        });
-                        table.appendChild(tbody);
-                    }
-                    
-                    wrap.appendChild(table);
-                    el = wrap;
-                }
-                
-                // Images
-                else if (block.type === 'image') {
-                    const wrap = document.createElement('div'); wrap.className = `img-wrap ${block.align}`;
-                    const img = document.createElement('img'); img.dataset.src = block.src; img.className = 'lazy'; img.alt = block.caption || "Doc Image"; img.style.cursor = 'zoom-in';
-                    img.addEventListener('click', () => openLightbox(block.src)); imageObserver.observe(img);
-                    wrap.appendChild(img);
-                    if(block.caption) { const cap = document.createElement('span'); cap.className = 'caption'; cap.textContent = block.caption; wrap.appendChild(cap); }
-                    el = wrap;
-                }
-                // Roadmap
-                else if (block.type === 'roadmap') {
-                     const container = document.createElement('div'); container.className = 'roadmap-container';
-                     block.milestones.forEach(milestone => {
-                        const item = document.createElement('div');
-                        const statusClass = `status-${milestone.status.toLowerCase().replace(' ', '-')}`;
-                        item.className = `roadmap-item ${statusClass}`;
-                        const featureList = milestone.features.map(f => `<li>${f}</li>`).join('');
-                        item.innerHTML = `
-                            <div class="roadmap-content">
-                                <div class="roadmap-header-group">
-                                    <div class="rm-meta"><span class="rm-version">${milestone.version}</span><span class="rm-date">${milestone.date}</span></div>
-                                    <i class='bx bx-chevron-down rm-toggle-icon'></i>
-                                </div>
-                                <div class="roadmap-details"><ul class="rm-features">${featureList}</ul></div>
-                            </div>`;
-                        item.querySelector('.roadmap-header-group').addEventListener('click', () => { item.classList.toggle('expanded'); });
-                        container.appendChild(item);
-                     });
-                     el = container;
-                }
-                if (el) mainContent.appendChild(el);
-            });
-        }
-
-        // Subsection Grid (Quick Links)
-        if (section.subsections && section.subsections.length > 0) {
-            const subContainer = document.createElement('div');
-            subContainer.className = 'subsection-grid';
-            section.subsections.forEach(sub => {
+            projects.forEach(project => {
+                // Changed from 'a' to 'div' to support multiple anchor buttons inside
                 const card = document.createElement('div');
-                card.className = 'subsection-card';
-                card.innerHTML = `<i class='bx bx-subdirectory-right'></i><span>${sub.title}</span>`;
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    highlightSidebarItem(sub._uuid);
-                    renderContent(sub);
-                });
-                subContainer.appendChild(card);
+                card.className = 'project-card';
+                
+                card.innerHTML = `
+                    <div class="card-image-wrap">
+                        <img src="${project.image}" class="card-image" alt="${project.title}">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${project.title}</h3>
+                        <p class="card-desc">${project.description}</p>
+                        
+                        <!-- New Buttons Container -->
+                        <div class="card-buttons">
+                            <a href="${project.link}" target="_blank" rel="noopener noreferrer" class="card-link-wrapper">
+                                <div class="card-link-content">
+                                    <span>View Project</span>
+                                    <i class="ph ph-arrow-up-right"></i>
+                                </div>
+                            </a>
+                            
+                            <!-- Assuming you add a "docLink" to your JSON. Fallback is '#' -->
+                            <a href="${project.docLink || '#'}" target="_blank" rel="noopener noreferrer" class="card-link-wrapper">
+                                <div class="card-link-content">
+                                    <span>Read Docs</span>
+                                    <i class="ph ph-book-open-text"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                projectGridContainer.appendChild(card);
             });
-            mainContent.appendChild(subContainer);
-        }
-        
-        // Navigation Buttons (Prev/Next in Flattened List)
-        if (!searchInput || !searchInput.value) renderNavButtons(section);
-
-        const clear = document.createElement('div');
-        clear.style.clear = 'both';
-        mainContent.appendChild(clear);
-        mainContent.scrollTop = 0;
-    }
-
-    function renderNavButtons(currentSection) {
-        const flatIndex = flatNavigationList.findIndex(item => item._uuid === currentSection._uuid);
-        if (flatIndex === -1) return;
-
-        const navContainer = document.createElement('div');
-        navContainer.className = 'page-nav';
-
-        if (flatIndex > 0) {
-            const prev = flatNavigationList[flatIndex - 1];
-            const btn = document.createElement('div'); btn.className = 'nav-btn prev';
-            btn.innerHTML = `<i class='bx bx-chevron-left'></i><div><span class="nav-label">Previous</span><span class="nav-title">${prev.title}</span></div>`;
-            btn.addEventListener('click', () => { highlightSidebarItem(prev._uuid); renderContent(prev); });
-            navContainer.appendChild(btn);
-        }
-        if (flatIndex < flatNavigationList.length - 1) {
-            const next = flatNavigationList[flatIndex + 1];
-            const btn = document.createElement('div'); btn.className = 'nav-btn next';
-            btn.innerHTML = `<div><span class="nav-label">Next</span><span class="nav-title">${next.title}</span></div><i class='bx bx-chevron-right'></i>`;
-            btn.addEventListener('click', () => { highlightSidebarItem(next._uuid); renderContent(next); });
-            navContainer.appendChild(btn);
-        }
-        mainContent.appendChild(navContainer);
-    }
-
-    function parseRichText(content) {
-        if (Array.isArray(content)) return content.join("");
-        return content;
-    }
-
-    // // View Switching & Utils
-    // function showDocsInterface() { 
-    //     landingView.classList.add('hidden'); 
-    //     docsView.classList.remove('hidden'); 
-    //     document.body.style.overflowY = 'hidden'; // Lock body scroll inside docs
-    //     window.scrollTo(0, 0); // Scroll to top when opening docs
-    // }
-    
-    // function showLandingPage() { 
-    //     docsView.classList.add('hidden'); 
-    //     landingView.classList.remove('hidden'); 
-    //     if(projectSelector) projectSelector.value = ""; 
-    //     document.body.style.overflowY = 'auto'; // Restore body scroll on front page
-    //     window.scrollTo(0, 0); // Scroll to top when returning to home
-    // }
-    
-    // function openLightbox(src) { 
-    //     if(lightboxImg) lightboxImg.src = src; 
-    //     if(lightbox) lightbox.classList.add('active'); 
-    //     document.body.style.overflowY = 'hidden'; // Lock scroll when viewing images
-    // }
-    
-    // function closeLightbox() { 
-    //     if(lightbox) lightbox.classList.remove('active'); 
-    //     setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); 
-    //     // Restore to auto ONLY if we are back on the landing page
-    //     document.body.style.overflowY = docsView.classList.contains('hidden') ? 'auto' : 'hidden'; 
-    // }
-
-// =========================================================================
-    // 6. VIEW SWITCHING & UTILS (Updated with Screen Check)
-    // =========================================================================
-    
-    // Helper to check if the device is desktop size (based on your 968px CSS breakpoint)
-    const isDesktop = () => window.innerWidth > 968;
-
-    function showDocsInterface() { 
-        landingView.classList.add('hidden'); 
-        docsView.classList.remove('hidden'); 
-        
-        // Only lock body scroll if the device is desktop
-        document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto'; 
-        
-        window.scrollTo(0, 0); 
-    }
-    
-    function showLandingPage() { 
-        docsView.classList.add('hidden'); 
-        landingView.classList.remove('hidden'); 
-        if(projectSelector) projectSelector.value = ""; 
-        
-        // Always restore body scroll on the landing page
-        document.body.style.overflowY = 'auto'; 
-        window.scrollTo(0, 0); 
-    }
-    
-    function openLightbox(src) { 
-        if(lightboxImg) lightboxImg.src = src; 
-        if(lightbox) lightbox.classList.add('active'); 
-        
-        // Only lock body scroll if the device is desktop
-        document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto'; 
-    }
-    
-    function closeLightbox() { 
-        if(lightbox) lightbox.classList.remove('active'); 
-        setTimeout(() => { if(lightboxImg) lightboxImg.src = ''; }, 300); 
-        
-        // Re-apply the lock ONLY if we are back in the docs view AND on a desktop
-        document.body.style.overflowY = (docsView.classList.contains('hidden') || !isDesktop()) ? 'auto' : 'hidden'; 
-    }
-
-    // Ensure scroll lock updates correctly if the user rotates their phone or resizes the browser
-    window.addEventListener('resize', () => {
-        // Only update if we are inside the docs and NOT viewing an image popup
-        if (!docsView.classList.contains('hidden') && !lightbox.classList.contains('active')) {
-            document.body.style.overflowY = isDesktop() ? 'hidden' : 'auto';
-        }
-    });
-
+        })
+        .catch(err => {
+            console.error("Error loading projects.json:", err);
+            projectGridContainer.innerHTML = `
+                <div style="text-align: center; color: var(--text-muted); width: 100%; grid-column: 1 / -1;">
+                    <p>Failed to load projects. Make sure projects.json exists and you are running on a local server.</p>
+                </div>
+            `;
+        });
 });
-
-// Visuals
-function cycleTheme() {
-    const themes = ['theme-cosmic', 'theme-cyberpunk', 'theme-royal', 'theme-metal'];
-    const body = document.body;
-    let current = '';
-    themes.forEach(t => { if(body.classList.contains(t)) current = t; });
-    body.classList.remove(...themes);
-    if (!current) body.classList.add(themes[0]);
-    else { const idx = themes.indexOf(current); if (idx + 1 < themes.length) body.classList.add(themes[idx + 1]); }
-}
-
-function cycleFont() {
-    const fonts = ['font-default', 'font-modern', 'font-classic'];
-    const body = document.body;
-    let current = 'font-default'; 
-    
-    // Check what font class is currently active
-    fonts.forEach(f => { if(body.classList.contains(f)) current = f; });
-    
-    // Remove all font classes
-    body.classList.remove(...fonts);
-    
-    // Cycle to the next one
-    const idx = fonts.indexOf(current); 
-    if (idx + 1 < fonts.length) {
-        body.classList.add(fonts[idx + 1]); 
-    } else {
-        body.classList.add(fonts[0]); // Loops back to your original Science Gothic/Geom
-    }
-}
-
-function applyRandomTheme() {
-    const themes = ['theme-default', 'theme-cosmic', 'theme-cyberpunk', 'theme-royal', 'theme-metal'];
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-    
-    // Clean up old classes before adding new ones
-    document.body.classList.remove('theme-cosmic', 'theme-cyberpunk', 'theme-royal', 'theme-metal', 'dark-theme');
-    
-    if (randomTheme !== 'theme-default') {
-        document.body.classList.add(randomTheme, 'dark-theme');
-    }
-}
-
-function initStarfield() {
-    var canvas = document.getElementById('canvas'); if(!canvas) return;
-    var ctx = canvas.getContext('2d'), w = canvas.width = window.innerWidth, h = canvas.height = window.innerHeight;
-    const bodyStyle = getComputedStyle(document.body);
-    const themeHue = bodyStyle.getPropertyValue('--first-color-hue').trim();
-    var hue = parseInt(themeHue) || 35; 
-    var stars = [], count = 0, maxStars = 400;
-    var canvas2 = document.createElement('canvas'), ctx2 = canvas2.getContext('2d');
-    canvas2.width = 100; canvas2.height = 100;
-    var half = canvas2.width / 2, gradient2 = ctx2.createRadialGradient(half, half, 0, half, half, half);
-    gradient2.addColorStop(0.025, 'hsla(' + hue + ', 99%, 99%, 100%)'); gradient2.addColorStop(0.1, 'hsla(' + hue + ', 99%, 63%, 60%)'); gradient2.addColorStop(0.25, 'hsla(' + hue + ', 64%, 55%, 0%)');
-    ctx2.fillStyle = gradient2; ctx2.beginPath(); ctx2.arc(half, half, half, 0, Math.PI * 2); ctx2.fill();
-    function random(min, max) { if (arguments.length < 2) { max = min; min = 0; } if (min > max) { var hold = max; max = min; min = hold; } return Math.floor(Math.random() * (max - min + 1)) + min; }
-    function maxOrbit(x, y) { var max = Math.max(x, y), diameter = Math.round(Math.sqrt(max * max + max * max)); return diameter / 2; }
-    var Star = function () { this.orbitRadius = random(maxOrbit(w, h)); this.radius = random(60, this.orbitRadius) / 12; this.orbitX = w / 2; this.orbitY = h / 2; this.timePassed = random(0, maxStars); this.speed = random(this.orbitRadius) / 500000; this.alpha = random(2, 10) / 10; count++; stars[count] = this; }
-    Star.prototype.draw = function () { var x = Math.sin(this.timePassed) * this.orbitRadius + this.orbitX, y = Math.cos(this.timePassed) * this.orbitRadius + this.orbitY, twinkle = random(10); if (twinkle === 1 && this.alpha > 0) this.alpha -= 0.05; else if (twinkle === 2 && this.alpha < 1) this.alpha += 0.05; ctx.globalAlpha = this.alpha; ctx.drawImage(canvas2, x - this.radius / 2, y - this.radius / 2, this.radius, this.radius); this.timePassed += this.speed; }
-    if(window.starLoop) cancelAnimationFrame(window.starLoop);
-    stars = []; count = 0; for (var i = 0; i < maxStars; i++) new Star();
-    function animation() { ctx.clearRect(0, 0, w, h); ctx.globalCompositeOperation = 'lighter'; for (var i = 1, l = stars.length; i < l; i++) stars[i].draw(); ctx.globalCompositeOperation = 'source-over'; window.starLoop = requestAnimationFrame(animation); }
-    animation();
-    window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; });
-}

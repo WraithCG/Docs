@@ -3,78 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WraithCG | Docs</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>WraithCG | Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    
-    <canvas id="canvas"></canvas>
-    
-    <div class="header-style">
-        <header class="glass-panel header-bar">
-            <div class="logo-area">
-                <button id="home-btn" class="icon-btn" title="Back to Home">
-                    <i class='bx bx-home-alt-2'></i>
-                </button>
-                <button id="home-btn" class="icon-btn" title="View Portfolio">
-                    <a href="https://wraithcg.github.io/me"><i class='bx bx-user'></i></a>
-                </button>
-                <div class="logo">wRAiTH<span class="highlight">_CG</span></div>
-            </div>
+<body class="theme-dark-orange">
 
-            <div class="project-select-wrapper">
-                <i class='bx bx-folder-open'></i>
-                <select id="project-selector">
-                    <option value="" disabled selected>Switch Project...</option>
-                    </select>
+    <div class="ambient-glow" id="ambient-glow"></div>
+
+    <div class="mobile-header glass-panel">
+        <div class="header-left">
+            <button id="mobile-menu-btn" class="icon-btn" aria-label="Toggle Menu"><i class="ph ph-list"></i></button>
+        </div>
+        <div class="header-center">
+            <div class="logo">wRAiTH<span>_CG</span></div>
+        </div>
+        <div class="header-right theme-toggle-wrapper">
+            <button class="theme-toggle-mobile" id="theme-btn-mobile" aria-label="Cycle Theme">
+                <i class="ph ph-palette"></i>
+            </button>
+            <span class="theme-tooltip" id="theme-tooltip-mobile">Dark Orange</span>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="mobile-sidebar glass-panel" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <div class="logo">Links</div>
+            <button id="close-sidebar" class="icon-btn"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="sidebar-links">
+            <a href="https://wraithcg.github.io/me" title="View Portfolio"><i class="ph ph-user"></i> Portfolio</a>
+            <a href="https://discord.gg/yourserver" title="Discord"><i class="ph ph-discord-logo"></i> Discord</a>
+            <a href="https://fab.com/sellers/yourprofile" title="Store"><i class="ph ph-storefront"></i> Store</a>
+        </div>
+    </div>
+
+    <div class="layout-single">
+        
+        <header class="top-header glass-panel">
+            <div class="header-left">
             </div>
             
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <div class="theme-toggle" id="font-btn" title="Cycle Font">
-                    <i class='bx bx-font'></i>
-                </div>
-                <div class="theme-toggle" id="theme-btn" title="Cycle Theme">
-                    <i class='bx bx-palette'></i>
-                </div>
+            <div class="header-center">
+                <div class="logo">wRAiTH<span>_CG</span></div>
             </div>
             
+            <div class="header-right">
+                <div class="theme-toggle-wrapper">
+                    <button class="theme-toggle" id="theme-btn" aria-label="Cycle Theme">
+                        <i class="ph ph-palette"></i>
+                    </button>
+                    <span class="theme-tooltip" id="theme-tooltip">Dark Orange</span>
+                </div>
+            </div>
         </header>
-    </div>
-    <div id="landing-view" class="landing-container">
-        <div class="landing-header">
-            <h1>Select a <span class="highlight">Project</span></h1>
-            <p>Choose a documentation reference to begin</p>
-        </div>
-        <div id="project-grid" class="project-grid">
-            </div>
-    </div>
 
-    <div id="docs-view" class="docs-wrapper hidden">
-        <div class="main-grid">
-            <nav class="glass-panel sidebar">
-                <div class="sidebar-header">CONTENTS</div>
+        <div class="sub-header glass-panel">
+            <a href="https://wraithcg.github.io/me" class="sub-link"><i class="ph ph-user"></i> Portfolio</a>
+            <a href="https://discord.gg/yourserver" class="sub-link"><i class="ph ph-discord-logo"></i> Discord</a>
+            <a href="https://fab.com/sellers/yourprofile" class="sub-link"><i class="ph ph-storefront"></i> Store</a>
+        </div>
+
+        <main class="landing-container">
+            <div class="landing-header">
+                <h1>Select a <span>Project</span></h1>
+                <!-- <p>Explore My Portfolio of Game Systems and Templates :)</p> -->
                 
-                <div class="search-container">
-                    <i class='bx bx-search'></i>
-                    <input type="text" id="search-input" placeholder="Search docs...">
+                <!-- View Toggle Buttons -->
+                <div class="view-toggle">
+                    <button id="view-grid-btn" class="active" aria-label="Grid View"><i class="ph ph-squares-four"></i></button>
+                    <button id="view-list-btn" aria-label="List View"><i class="ph ph-list-dashes"></i></button>
                 </div>
+            </div>
+            
+            <div id="project-grid" class="project-grid">
+                <!-- Project Cards Injected via JS -->
+            </div>
+        </main>
 
-                <ul id="section-list"></ul>
-            </nav>
-
-            <main class="glass-panel content-area" id="main-content">
-                <div class="placeholder">
-                    <h2>Select a Topic</h2>
-                    <p>Use the sidebar to navigate the documentation.</p>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <span id="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Fullscreen View">
     </div>
 
     <script src="script.js"></script>
